@@ -50,38 +50,11 @@ az ad sp create --id 750452fa-c519-455f-b77d-18f9707e2f39
 
 ### 3. Federated Credentials Created
 
-#### a) Master Branch Credential
+#### a) Main Branch Credential
 
-**Name:** `gh-master`
-**Subject:** `repo:ChrisStephens1971/saas202544:ref:refs/heads/master`
+**Name:** `gh-main`
+**Subject:** `repo:ChrisStephens1971/saas202544:ref:refs/heads/main`
 
-```bash
-az ad app federated-credential create \
-  --id 750452fa-c519-455f-b77d-18f9707e2f39 \
-  --parameters '{
-    "name": "gh-master",
-    "issuer": "https://token.actions.githubusercontent.com",
-    "subject": "repo:ChrisStephens1971/saas202544:ref:refs/heads/master",
-    "audiences": ["api://AzureADTokenExchange"]
-  }'
-```
-
-**Output:**
-```json
-{
-  "name": "gh-master",
-  "subject": "repo:ChrisStephens1971/saas202544:ref:refs/heads/master"
-}
-```
-
-⚠️ **Note:** Repository currently uses `master` as default branch. To align with GitHub standard, consider renaming to `main`:
-```bash
-git branch -m master main
-git push -u origin main
-gh repo edit --default-branch main
-```
-
-If you rename to `main`, update the federated credential:
 ```bash
 az ad app federated-credential create \
   --id 750452fa-c519-455f-b77d-18f9707e2f39 \
@@ -91,6 +64,27 @@ az ad app federated-credential create \
     "subject": "repo:ChrisStephens1971/saas202544:ref:refs/heads/main",
     "audiences": ["api://AzureADTokenExchange"]
   }'
+```
+
+**Output:**
+```json
+{
+  "name": "gh-main",
+  "subject": "repo:ChrisStephens1971/saas202544:ref:refs/heads/main"
+}
+```
+
+?? **Note:** Repository currently uses `master` as the default branch. Plan to rename it to `main` so the federated credential subject is already aligned. After renaming, remove any legacy credential named `gh-master` to avoid unused trust relationships:
+```bash
+# Rename branch locally and push
+git branch -m master main
+git push -u origin main
+gh repo edit --default-branch main
+
+# Remove legacy federated credential if it still exists
+az ad app federated-credential delete \
+  --id 750452fa-c519-455f-b77d-18f9707e2f39 \
+  --federated-credential-id gh-master
 ```
 
 #### b) Pull Request Credential
@@ -247,7 +241,7 @@ Expected output:
 ```
 Name       Subject                                                    Issuer
 ---------  ---------------------------------------------------------  ----------------------------------------
-gh-master  repo:ChrisStephens1971/saas202544:ref:refs/heads/master   https://token.actions.githubusercontent.com
+gh-main  repo:ChrisStephens1971/saas202544:ref:refs/heads/main   https://token.actions.githubusercontent.com
 gh-pr      repo:ChrisStephens1971/saas202544:pull_request            https://token.actions.githubusercontent.com
 ```
 
@@ -282,8 +276,8 @@ The workflows will test OIDC authentication automatically when they run.
 | **Service Principal ID** | `20707ebd-5b35-4596-83d8-b668cfae9688` |
 | **Tenant ID** | `04c5f804-d3ee-4b0b-b7fa-772496bb7a34` |
 | **Subscription ID** | `b3fc75c0-c060-4a53-a7cf-5f6ae22fefec` |
-| **Default Branch** | `master` (consider renaming to `main`) |
-| **Federated Credentials** | 2 (master branch, pull requests) |
+| **Default Branch** | `master` (rename to `main` planned; gh-main credential already documented) |
+| **Federated Credentials** | 2 (`gh-main` for branch refs/heads/main, `gh-pr` for pull_request) |
 | **RBAC Roles** | Reader (subscription), Storage Blob Data Contributor (state storage) |
 
 ---
@@ -313,3 +307,9 @@ The workflows will test OIDC authentication automatically when they run.
 **RBAC Scope:** Narrow (Reader at subscription, Storage Blob Data Contributor on state storage)
 
 **Last Updated:** 2025-11-08
+
+
+
+
+
+
