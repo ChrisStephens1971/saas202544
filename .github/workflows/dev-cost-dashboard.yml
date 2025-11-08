@@ -41,8 +41,6 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y jq
-          az extension add --name costmanagement --yes --only-show-errors
-          az extension list --query "[?name=='costmanagement'].{Name:name,Version:version}" -o table
 
       - name: Query MonthToDate costs
         id: cost
@@ -57,12 +55,40 @@ jobs:
 
           echo "Querying costs for scope: ${scope}"
 
-          res=$(az costmanagement query --type ActualCost --timeframe MonthToDate --scope "$scope" \
-            --dataset '{"granularity":"None","aggregation":{"totalCost":{"name":"Cost","function":"Sum"}},"grouping":[{"type":"Dimension","name":"ServiceName"},{"type":"Dimension","name":"ResourceGroupName"}]}')
+          # Use REST API directly (extension 'query' command not available)
+          cat > /tmp/cost-query.json <<'EOF'
+{
+  "type": "ActualCost",
+  "timeframe": "MonthToDate",
+  "dataset": {
+    "granularity": "None",
+    "aggregation": {
+      "totalCost": {
+        "name": "Cost",
+        "function": "Sum"
+      }
+    },
+    "grouping": [
+      {
+        "type": "Dimension",
+        "name": "ServiceName"
+      },
+      {
+        "type": "Dimension",
+        "name": "ResourceGroupName"
+      }
+    ]
+          }
+}
+EOF
+
+          res=$(az rest --method POST \
+            --url "https://management.azure.com${scope}/providers/Microsoft.CostManagement/query?api-version=2023-11-01" \
+            --body @/tmp/cost-query.json)
 
           echo "$res" > cost/dev-cost.json
 
-          total=$(jq -r '[.properties.rows[][2]]|add' cost/dev-cost.json)
+          total=$(jq -r '[.properties.rows[][2]]|add//0' cost/dev-cost.json)
           echo "total=${total}" >> "$GITHUB_OUTPUT"
 
       - name: Post summary table
