@@ -4,7 +4,9 @@ Generated from .template-system on 2025-11-08 10:00:14Z.
 
 ## Overview
 
-This repository implements a cloud-native SaaS infrastructure using Azure and Terraform, with automated CI/CD pipelines via GitHub Actions. Infrastructure is managed as code with state stored securely in Azure Storage, and authentication uses OIDC federation (no secrets).
+This repository implements a cloud-native SaaS infrastructure using Azure and Terraform, with automated
+CI/CD pipelines via GitHub Actions. Infrastructure is managed as code with state stored securely in Azure
+Storage, and authentication uses OIDC federation (no secrets).
 
 ## Infrastructure Architecture
 
@@ -55,6 +57,7 @@ Authentication uses OpenID Connect (OIDC) workload identity federation - no secr
 | `gh-ci-fix` | `repo:ChrisStephens1971/saas202544:ref:refs/heads/ci/fix-oidc-plan` | CI fix branch |
 
 **OIDC Parameters**:
+
 - Issuer: `https://token.actions.githubusercontent.com`
 - Audience: `api://AzureADTokenExchange`
 
@@ -85,6 +88,7 @@ Validates repository structure and basic configuration before other workflows ru
 **Purpose**: Terraform infrastructure planning and deployment
 
 **Jobs**:
+
 - `plan`: Generates Terraform execution plan (runs on PRs and main)
 - `apply`: Applies infrastructure changes (runs only on main branch)
 
@@ -97,6 +101,7 @@ Validates repository structure and basic configuration before other workflows ru
 **Purpose**: Static analysis and security scanning
 
 **Jobs**:
+
 - `actionlint`: Validates GitHub Actions workflow syntax
 - `markdownlint`: Validates markdown formatting
 - `trufflehog`: Scans for secrets and credentials
@@ -108,6 +113,7 @@ Validates repository structure and basic configuration before other workflows ru
 **Purpose**: Validates Azure OIDC authentication and RBAC permissions
 
 **Validation Steps**:
+
 1. Authenticate to Azure using OIDC (no secrets)
 2. Verify subscription access
 3. Check Terraform state resource group accessibility
@@ -115,6 +121,7 @@ Validates repository structure and basic configuration before other workflows ru
 5. Test blob data plane access (container listing via RBAC)
 
 **Permissions Required**:
+
 - `id-token: write` - Request OIDC token from GitHub
 - `contents: read` - Checkout repository
 
@@ -190,7 +197,8 @@ gh workflow run infra-terraform --ref main
 gh workflow run oidc-smoke --ref feature/my-branch
 ```
 
-Note: Manual workflow runs on non-main branches will fail OIDC authentication unless a federated credential exists for that specific ref pattern.
+Note: Manual workflow runs on non-main branches will fail OIDC authentication unless a federated
+credential exists for that specific ref pattern.
 
 ### Validating OIDC Configuration
 
@@ -228,17 +236,21 @@ az storage container list \
 
 ### No Secrets in GitHub
 
-This repository uses OIDC workload identity federation exclusively. No Azure credentials, storage keys, or secrets are stored in GitHub.
+This repository uses OIDC workload identity federation exclusively. No Azure credentials, storage
+keys, or secrets are stored in GitHub.
 
 ### RBAC-Only Storage Access
 
-Storage account access uses Azure AD authentication with the Storage Blob Data Contributor role. Storage account keys are not used or required for CI/CD operations.
+Storage account access uses Azure AD authentication with the Storage Blob Data Contributor role.
+Storage account keys are not used or required for CI/CD operations.
 
 ### Principle of Least Privilege
 
 The service principal has:
+
 - Reader role at subscription level (cannot modify resources)
-- Storage Blob Data Contributor only on the state storage account (cannot access other storage accounts)
+- Storage Blob Data Contributor only on the state storage account (cannot access other storage
+  accounts)
 - No ability to manage IAM roles or create/modify Azure resources directly
 
 ### Credential Scanning
