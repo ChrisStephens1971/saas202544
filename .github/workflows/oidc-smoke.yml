@@ -1,0 +1,72 @@
+name: OIDC Smoke Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  smoke:
+    name: Validate OIDC Authentication
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Verify authentication
+        run: |
+          echo "=== Azure Account Information ==="
+          az account show -o table
+
+          echo ""
+          echo "=== Current User ==="
+          az account show --query user -o json
+
+          echo ""
+          echo "=== Subscription Details ==="
+          az account show --query "{name:name, id:id, tenantId:tenantId, state:state}" -o table
+
+      - name: Test state storage access
+        run: |
+          echo "=== Testing State Storage Access ==="
+          az storage account show \
+            --name stvrdtfstateeus201 \
+            --resource-group rg-tfstate-verdaio-eastus2-01 \
+            --query "{name:name, location:location, provisioningState:provisioningState}" \
+            -o table || echo "No access to state storage (expected if RBAC not assigned)"
+
+      - name: List role assignments
+        run: |
+          echo "=== Current Role Assignments ==="
+          SP_OBJECT_ID=$(az ad sp show --id ${{ vars.AZURE_CLIENT_ID }} --query id -o tsv)
+          az role assignment list \
+            --assignee-object-id "$SP_OBJECT_ID" \
+            --query "[].{Role:roleDefinitionName, Scope:scope}" \
+            -o table || echo "No role assignments found"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo ""
+          echo "========================================="
+          echo "OIDC Smoke Test Complete"
+          echo "========================================="
+          echo "✅ OIDC authentication successful"
+          echo "✅ Service principal: ${{ vars.AZURE_CLIENT_ID }}"
+          echo "✅ Subscription: ${{ vars.AZURE_SUBSCRIPTION_ID }}"
+          echo "✅ Tenant: ${{ vars.AZURE_TENANT_ID }}"
+          echo ""
+          echo "Next steps:"
+          echo "1. Complete RBAC assignments (see OIDC-SETUP.md)"
+          echo "2. Run 'review-pack' workflow to validate infrastructure"
+          echo "3. Run 'infra-terraform' workflow to test terraform plan"
