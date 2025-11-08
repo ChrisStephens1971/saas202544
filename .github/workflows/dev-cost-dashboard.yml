@@ -106,8 +106,9 @@ jobs:
 
       - name: Build HTML email body
         run: |
-          cat > cost/email-body.html <<'EOF'
-          <!DOCTYPE html>
+          # Generate complete HTML email using jq (avoids sed escaping issues)
+          jq -r --arg total "${{ steps.cost.outputs.total }}" --arg timestamp "$(date -u +"%Y-%m-%d %H:%M:%S UTC")" '
+          "<!DOCTYPE html>
           <html>
           <head>
             <style>
@@ -121,30 +122,18 @@ jobs:
           </head>
           <body>
             <h2>Dev Cost Dashboard (Month-to-Date)</h2>
-            <p><strong>Total:</strong> $TOTAL_COST</p>
+            <p><strong>Total:</strong> $\($total)</p>
             <table>
               <thead>
-                <tr><th>Service</th><th>Resource Group</th><th class="cost">Cost</th></tr>
+                <tr><th>Service</th><th>Resource Group</th><th class=\"cost\">Cost</th></tr>
               </thead>
               <tbody>
-          TABLE_ROWS
+          \(.properties.rows | sort_by(.[0]) | reverse | map("<tr><td>\(.[1])</td><td>\(.[2])</td><td class=\"cost\">$\(.[0])</td></tr>") | join("\n"))
               </tbody>
             </table>
-            <p><em>Generated: TIMESTAMP</em></p>
+            <p><em>Generated: \($timestamp)</em></p>
           </body>
-          </html>
-          EOF
-
-          # Sort by cost descending, format as HTML table rows
-          rows=$(jq -r '.properties.rows | sort_by(.[0]) | reverse | .[] | "<tr><td>\(.[1])</td><td>\(.[2])</td><td class=\"cost\">$\(.[0])</td></tr>"' cost/dev-cost.json)
-          timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-
-          {
-            sed "s|TOTAL_COST|${{ steps.cost.outputs.total }}|g" cost/email-body.html | \
-            sed "s|TABLE_ROWS|${rows}|g" | \
-            sed "s|TIMESTAMP|${timestamp}|g"
-          } > cost/email-body.tmp
-          mv cost/email-body.tmp cost/email-body.html
+          </html>"' cost/dev-cost.json > cost/email-body.html
 
       - name: Send email via Microsoft Graph
         run: |
