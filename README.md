@@ -255,11 +255,13 @@ The service principal has:
 
 ### Credential Scanning
 
-The `trufflehog` workflow job scans all commits for accidentally committed secrets and fails the build if verified credentials are detected.
+The `trufflehog` workflow job scans all commits for accidentally committed secrets and fails the
+build if verified credentials are detected.
 
 ### Nightly Validation
 
 The OIDC smoke test runs nightly to detect:
+
 - Expired or revoked federated credentials
 - RBAC permission changes
 - Storage account access issues
@@ -274,6 +276,7 @@ The OIDC smoke test runs nightly to detect:
 **Cause**: The workflow is running on a branch/ref without a federated credential.
 
 **Solution**:
+
 - PRs automatically work (subject: `repo:ChrisStephens1971/saas202544:pull_request`)
 - Main branch works (subject: `repo:ChrisStephens1971/saas202544:ref:refs/heads/main`)
 - For other branches, add a federated credential with appropriate subject pattern
@@ -285,6 +288,7 @@ The OIDC smoke test runs nightly to detect:
 **Cause**: Service principal lacks Storage Blob Data Contributor role.
 
 **Solution**:
+
 ```bash
 az role assignment create \
   --role "Storage Blob Data Contributor" \
@@ -297,6 +301,7 @@ az role assignment create \
 **Issue**: PR cannot merge due to failing required checks.
 
 **Solution**: Ensure these checks are passing:
+
 - `boot-check` (from boot-check workflow)
 - `infra-terraform / plan` (from infra-terraform workflow, job named "plan")
 
@@ -307,6 +312,7 @@ Check workflow logs for specific errors.
 **Error**: Terraform apply fails on main branch
 
 **Common Causes**:
+
 1. State file locked by another process
 2. Insufficient permissions to create/modify resources
 3. Resource naming conflicts
