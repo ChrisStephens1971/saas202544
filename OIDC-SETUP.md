@@ -174,8 +174,13 @@ az storage account blob-service-properties update \
 **Purpose:** Allow Terraform to read existing resources for planning
 
 ```bash
+# Get service principal object ID for reliable role assignment
+APP_ID="750452fa-c519-455f-b77d-18f9707e2f39"
+SP_OBJECT_ID=$(az ad sp show --id "$APP_ID" --query id -o tsv)
+
+# Assign Reader at subscription scope
 az role assignment create \
-  --assignee 750452fa-c519-455f-b77d-18f9707e2f39 \
+  --assignee-object-id "$SP_OBJECT_ID" \
   --role Reader \
   --scope "/subscriptions/b3fc75c0-c060-4a53-a7cf-5f6ae22fefec"
 ```
@@ -195,9 +200,9 @@ STORAGE_ID=$(az storage account show \
   --resource-group rg-tfstate-verdaio-eastus2-01 \
   --query id -o tsv)
 
-# Assign Storage Blob Data Contributor
+# Assign Storage Blob Data Contributor (using object ID)
 az role assignment create \
-  --assignee 750452fa-c519-455f-b77d-18f9707e2f39 \
+  --assignee-object-id "$SP_OBJECT_ID" \
   --role "Storage Blob Data Contributor" \
   --scope "$STORAGE_ID"
 ```

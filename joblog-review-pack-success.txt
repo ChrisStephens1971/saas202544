@@ -1,0 +1,541 @@
+build	Set up job	∩╗┐2025-11-08T13:43:16.4518603Z Current runner version: '2.329.0'
+build	Set up job	2025-11-08T13:43:16.4552096Z ##[group]Runner Image Provisioner
+build	Set up job	2025-11-08T13:43:16.4553277Z Hosted Compute Agent
+build	Set up job	2025-11-08T13:43:16.4554202Z Version: 20251016.436
+build	Set up job	2025-11-08T13:43:16.4555130Z Commit: 8ab8ac8bfd662a3739dab9fe09456aba92132568
+build	Set up job	2025-11-08T13:43:16.4556205Z Build Date: 2025-10-15T20:44:12Z
+build	Set up job	2025-11-08T13:43:16.4557207Z ##[endgroup]
+build	Set up job	2025-11-08T13:43:16.4557967Z ##[group]Operating System
+build	Set up job	2025-11-08T13:43:16.4558832Z Ubuntu
+build	Set up job	2025-11-08T13:43:16.4559834Z 24.04.3
+build	Set up job	2025-11-08T13:43:16.4560544Z LTS
+build	Set up job	2025-11-08T13:43:16.4561306Z ##[endgroup]
+build	Set up job	2025-11-08T13:43:16.4562088Z ##[group]Runner Image
+build	Set up job	2025-11-08T13:43:16.4562978Z Image: ubuntu-24.04
+build	Set up job	2025-11-08T13:43:16.4563723Z Version: 20251102.99.1
+build	Set up job	2025-11-08T13:43:16.4565949Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251102.99/images/ubuntu/Ubuntu2404-Readme.md
+build	Set up job	2025-11-08T13:43:16.4568239Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251102.99
+build	Set up job	2025-11-08T13:43:16.4570358Z ##[endgroup]
+build	Set up job	2025-11-08T13:43:16.4571840Z ##[group]GITHUB_TOKEN Permissions
+build	Set up job	2025-11-08T13:43:16.4574167Z Contents: read
+build	Set up job	2025-11-08T13:43:16.4575150Z Metadata: read
+build	Set up job	2025-11-08T13:43:16.4575927Z ##[endgroup]
+build	Set up job	2025-11-08T13:43:16.4578659Z Secret source: Actions
+build	Set up job	2025-11-08T13:43:16.4580042Z Prepare workflow directory
+build	Set up job	2025-11-08T13:43:16.5326796Z Prepare all required actions
+build	Set up job	2025-11-08T13:43:16.5364496Z Getting action download info
+build	Set up job	2025-11-08T13:43:17.0003559Z Download action repository 'actions/checkout@v4' (SHA:08eba0b27e820071cde6df949e0beb9ba4906955)
+build	Set up job	2025-11-08T13:43:17.1926520Z Download action repository 'azure/login@v2' (SHA:a457da9ea143d694b1b9c7c869ebb04ebe844ef5)
+build	Set up job	2025-11-08T13:43:17.6117176Z Download action repository 'hashicorp/setup-terraform@v3' (SHA:b9cd54a3c349d3f38e8881555d616ced269862dd)
+build	Set up job	2025-11-08T13:43:18.0973072Z Download action repository 'gitleaks/gitleaks-action@v2' (SHA:ff98106e4c7b2bc287b24eaf42907196329070c7)
+build	Set up job	2025-11-08T13:43:18.6091671Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+build	Set up job	2025-11-08T13:43:18.7955995Z Complete job name: build
+build	Checkout	∩╗┐2025-11-08T13:43:18.8599468Z ##[group]Run actions/checkout@v4
+build	Checkout	2025-11-08T13:43:18.8600226Z with:
+build	Checkout	2025-11-08T13:43:18.8600562Z   repository: ChrisStephens1971/saas202544
+build	Checkout	2025-11-08T13:43:18.8601131Z   token: ***
+build	Checkout	2025-11-08T13:43:18.8601414Z   ssh-strict: true
+build	Checkout	2025-11-08T13:43:18.8601703Z   ssh-user: git
+build	Checkout	2025-11-08T13:43:18.8602007Z   persist-credentials: true
+build	Checkout	2025-11-08T13:43:18.8602321Z   clean: true
+build	Checkout	2025-11-08T13:43:18.8602632Z   sparse-checkout-cone-mode: true
+build	Checkout	2025-11-08T13:43:18.8602977Z   fetch-depth: 1
+build	Checkout	2025-11-08T13:43:18.8603261Z   fetch-tags: false
+build	Checkout	2025-11-08T13:43:18.8603560Z   show-progress: true
+build	Checkout	2025-11-08T13:43:18.8603864Z   lfs: false
+build	Checkout	2025-11-08T13:43:18.8604137Z   submodules: false
+build	Checkout	2025-11-08T13:43:18.8604436Z   set-safe-directory: true
+build	Checkout	2025-11-08T13:43:18.8604946Z env:
+build	Checkout	2025-11-08T13:43:18.8605299Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Checkout	2025-11-08T13:43:18.8605849Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Checkout	2025-11-08T13:43:18.8606357Z   REVIEW_AZURE_CLIENT_ID: 750452fa-c519-455f-b77d-18f9707e2f39
+build	Checkout	2025-11-08T13:43:18.8606792Z ##[endgroup]
+build	Checkout	2025-11-08T13:43:18.9665969Z Syncing repository: ChrisStephens1971/saas202544
+build	Checkout	2025-11-08T13:43:18.9667762Z ##[group]Getting Git version info
+build	Checkout	2025-11-08T13:43:18.9668291Z Working directory is '/home/runner/work/saas202544/saas202544'
+build	Checkout	2025-11-08T13:43:18.9668999Z [command]/usr/bin/git version
+build	Checkout	2025-11-08T13:43:18.9736892Z git version 2.51.2
+build	Checkout	2025-11-08T13:43:18.9763637Z ##[endgroup]
+build	Checkout	2025-11-08T13:43:18.9784936Z Temporarily overriding HOME='/home/runner/work/_temp/5da2b6e9-669b-48f1-9aff-f3b477dc5ca5' before making global git config changes
+build	Checkout	2025-11-08T13:43:18.9786015Z Adding repository directory to the temporary git global config as a safe directory
+build	Checkout	2025-11-08T13:43:18.9790860Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/saas202544/saas202544
+build	Checkout	2025-11-08T13:43:18.9828779Z Deleting the contents of '/home/runner/work/saas202544/saas202544'
+build	Checkout	2025-11-08T13:43:18.9833183Z ##[group]Initializing the repository
+build	Checkout	2025-11-08T13:43:18.9837967Z [command]/usr/bin/git init /home/runner/work/saas202544/saas202544
+build	Checkout	2025-11-08T13:43:18.9928889Z hint: Using 'master' as the name for the initial branch. This default branch name
+build	Checkout	2025-11-08T13:43:18.9930525Z hint: is subject to change. To configure the initial branch name to use in all
+build	Checkout	2025-11-08T13:43:18.9931174Z hint: of your new repositories, which will suppress this warning, call:
+build	Checkout	2025-11-08T13:43:18.9931620Z hint:
+build	Checkout	2025-11-08T13:43:18.9932201Z hint: 	git config --global init.defaultBranch <name>
+build	Checkout	2025-11-08T13:43:18.9932957Z hint:
+build	Checkout	2025-11-08T13:43:18.9933401Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+build	Checkout	2025-11-08T13:43:18.9934079Z hint: 'development'. The just-created branch can be renamed via this command:
+build	Checkout	2025-11-08T13:43:18.9934951Z hint:
+build	Checkout	2025-11-08T13:43:18.9935492Z hint: 	git branch -m <name>
+build	Checkout	2025-11-08T13:43:18.9936094Z hint:
+build	Checkout	2025-11-08T13:43:18.9936860Z hint: Disable this message with "git config set advice.defaultBranchName false"
+build	Checkout	2025-11-08T13:43:18.9938165Z Initialized empty Git repository in /home/runner/work/saas202544/saas202544/.git/
+build	Checkout	2025-11-08T13:43:18.9944902Z [command]/usr/bin/git remote add origin https://github.com/ChrisStephens1971/saas202544
+build	Checkout	2025-11-08T13:43:18.9978868Z ##[endgroup]
+build	Checkout	2025-11-08T13:43:18.9980012Z ##[group]Disabling automatic garbage collection
+build	Checkout	2025-11-08T13:43:18.9984036Z [command]/usr/bin/git config --local gc.auto 0
+build	Checkout	2025-11-08T13:43:19.0012101Z ##[endgroup]
+build	Checkout	2025-11-08T13:43:19.0013023Z ##[group]Setting up auth
+build	Checkout	2025-11-08T13:43:19.0019754Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Checkout	2025-11-08T13:43:19.0052240Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Checkout	2025-11-08T13:43:19.0363066Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Checkout	2025-11-08T13:43:19.0391760Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Checkout	2025-11-08T13:43:19.0614025Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+build	Checkout	2025-11-08T13:43:19.0659082Z ##[endgroup]
+build	Checkout	2025-11-08T13:43:19.0660165Z ##[group]Fetching the repository
+build	Checkout	2025-11-08T13:43:19.0667659Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ed777e328aabb79a73325e2025d50ab68ca24310:refs/remotes/origin/ci/fix-oidc-plan
+build	Checkout	2025-11-08T13:43:19.4534703Z From https://github.com/ChrisStephens1971/saas202544
+build	Checkout	2025-11-08T13:43:19.4535521Z  * [new ref]         ed777e328aabb79a73325e2025d50ab68ca24310 -> origin/ci/fix-oidc-plan
+build	Checkout	2025-11-08T13:43:19.4565943Z ##[endgroup]
+build	Checkout	2025-11-08T13:43:19.4566893Z ##[group]Determining the checkout info
+build	Checkout	2025-11-08T13:43:19.4568456Z ##[endgroup]
+build	Checkout	2025-11-08T13:43:19.4574015Z [command]/usr/bin/git sparse-checkout disable
+build	Checkout	2025-11-08T13:43:19.4613864Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+build	Checkout	2025-11-08T13:43:19.4641030Z ##[group]Checking out the ref
+build	Checkout	2025-11-08T13:43:19.4645515Z [command]/usr/bin/git checkout --progress --force -B ci/fix-oidc-plan refs/remotes/origin/ci/fix-oidc-plan
+build	Checkout	2025-11-08T13:43:19.4740846Z Switched to a new branch 'ci/fix-oidc-plan'
+build	Checkout	2025-11-08T13:43:19.4744092Z branch 'ci/fix-oidc-plan' set up to track 'origin/ci/fix-oidc-plan'.
+build	Checkout	2025-11-08T13:43:19.4749613Z ##[endgroup]
+build	Checkout	2025-11-08T13:43:19.4786232Z [command]/usr/bin/git log -1 --format=%H
+build	Checkout	2025-11-08T13:43:19.4808420Z ed777e328aabb79a73325e2025d50ab68ca24310
+build	Install utilities	∩╗┐2025-11-08T13:43:19.4985680Z ##[group]Run sudo apt-get update
+build	Install utilities	2025-11-08T13:43:19.4986427Z [36;1msudo apt-get update[0m
+build	Install utilities	2025-11-08T13:43:19.4987084Z [36;1msudo apt-get install -y tree cloc graphviz[0m
+build	Install utilities	2025-11-08T13:43:19.5041690Z shell: /usr/bin/bash -e {0}
+build	Install utilities	2025-11-08T13:43:19.5042275Z env:
+build	Install utilities	2025-11-08T13:43:19.5042869Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Install utilities	2025-11-08T13:43:19.5043831Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Install utilities	2025-11-08T13:43:19.5044771Z   REVIEW_AZURE_CLIENT_ID: 750452fa-c519-455f-b77d-18f9707e2f39
+build	Install utilities	2025-11-08T13:43:19.5045498Z ##[endgroup]
+build	Install utilities	2025-11-08T13:43:19.5993665Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+build	Install utilities	2025-11-08T13:43:19.6215998Z Get:6 https://packages.microsoft.com/repos/azure-cli noble InRelease [3564 B]
+build	Install utilities	2025-11-08T13:43:19.6415565Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+build	Install utilities	2025-11-08T13:43:19.6421114Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+build	Install utilities	2025-11-08T13:43:19.6444215Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+build	Install utilities	2025-11-08T13:43:19.6488651Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+build	Install utilities	2025-11-08T13:43:19.6520144Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+build	Install utilities	2025-11-08T13:43:19.7353307Z Get:8 https://packages.microsoft.com/repos/azure-cli noble/main amd64 Packages [1700 B]
+build	Install utilities	2025-11-08T13:43:19.8428656Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [67.3 kB]
+build	Install utilities	2025-11-08T13:43:19.8469409Z Get:10 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [49.9 kB]
+build	Install utilities	2025-11-08T13:43:19.8495041Z Get:11 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [11.2 kB]
+build	Install utilities	2025-11-08T13:43:19.8920643Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1585 kB]
+build	Install utilities	2025-11-08T13:43:19.9021813Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [299 kB]
+build	Install utilities	2025-11-08T13:43:19.9052446Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]
+build	Install utilities	2025-11-08T13:43:19.9081577Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [15.7 kB]
+build	Install utilities	2025-11-08T13:43:19.9094317Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1498 kB]
+build	Install utilities	2025-11-08T13:43:19.9181191Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [377 kB]
+build	Install utilities	2025-11-08T13:43:19.9214777Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [31.4 kB]
+build	Install utilities	2025-11-08T13:43:19.9229791Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [2244 kB]
+build	Install utilities	2025-11-08T13:43:19.9342758Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [509 kB]
+build	Install utilities	2025-11-08T13:43:19.9381951Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+build	Install utilities	2025-11-08T13:43:19.9808605Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+build	Install utilities	2025-11-08T13:43:19.9826345Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7132 B]
+build	Install utilities	2025-11-08T13:43:19.9842427Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [11.0 kB]
+build	Install utilities	2025-11-08T13:43:19.9854501Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+build	Install utilities	2025-11-08T13:43:19.9865017Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+build	Install utilities	2025-11-08T13:43:20.0007206Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1305 kB]
+build	Install utilities	2025-11-08T13:43:20.0083969Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [215 kB]
+build	Install utilities	2025-11-08T13:43:20.0124320Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]
+build	Install utilities	2025-11-08T13:43:20.0136918Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [9336 B]
+build	Install utilities	2025-11-08T13:43:20.0149756Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [906 kB]
+build	Install utilities	2025-11-08T13:43:20.0201651Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [203 kB]
+build	Install utilities	2025-11-08T13:43:20.0224489Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [52.3 kB]
+build	Install utilities	2025-11-08T13:43:20.0239957Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 c-n-f Metadata [19.4 kB]
+build	Install utilities	2025-11-08T13:43:20.0253295Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [2135 kB]
+build	Install utilities	2025-11-08T13:43:20.0766257Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [485 kB]
+build	Install utilities	2025-11-08T13:43:20.0800624Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+build	Install utilities	2025-11-08T13:43:20.0811567Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [208 B]
+build	Install utilities	2025-11-08T13:43:28.9340876Z Fetched 12.6 MB in 2s (8042 kB/s)
+build	Install utilities	2025-11-08T13:43:29.7076949Z Reading package lists...
+build	Install utilities	2025-11-08T13:43:29.7402693Z Reading package lists...
+build	Install utilities	2025-11-08T13:43:29.9300028Z Building dependency tree...
+build	Install utilities	2025-11-08T13:43:29.9307403Z Reading state information...
+build	Install utilities	2025-11-08T13:43:30.1032839Z tree is already the newest version (2.1.1-2ubuntu3).
+build	Install utilities	2025-11-08T13:43:30.1034105Z The following additional packages will be installed:
+build	Install utilities	2025-11-08T13:43:30.1035076Z   fonts-liberation2 libalgorithm-diff-perl libalgorithm-diff-xs-perl libann0
+build	Install utilities	2025-11-08T13:43:30.1036163Z   libb-hooks-endofscope-perl libb-hooks-op-check-perl libcdt5 libcgraph6
+build	Install utilities	2025-11-08T13:43:30.1036914Z   libclass-method-modifiers-perl libclass-xsaccessor-perl
+build	Install utilities	2025-11-08T13:43:30.1037794Z   libdevel-callchecker-perl libdynaloader-functions-perl libgts-0.7-5t64
+build	Install utilities	2025-11-08T13:43:30.1038586Z   libgts-bin libgvc6 libgvpr2 libimport-into-perl liblab-gamut1
+build	Install utilities	2025-11-08T13:43:30.1039536Z   libmodule-implementation-perl libmodule-runtime-perl libmoo-perl
+build	Install utilities	2025-11-08T13:43:30.1040273Z   libnamespace-clean-perl libpackage-stash-perl libpackage-stash-xs-perl
+build	Install utilities	2025-11-08T13:43:30.1041045Z   libparallel-forkmanager-perl libparams-classify-perl libpathplan4
+build	Install utilities	2025-11-08T13:43:30.1041990Z   libregexp-common-perl librole-tiny-perl libsub-exporter-progressive-perl
+build	Install utilities	2025-11-08T13:43:30.1042858Z   libsub-identify-perl libsub-name-perl libsub-quote-perl libtry-tiny-perl
+build	Install utilities	2025-11-08T13:43:30.1043498Z   libvariable-magic-perl
+build	Install utilities	2025-11-08T13:43:30.1049575Z Suggested packages:
+build	Install utilities	2025-11-08T13:43:30.1050114Z   gsfonts graphviz-doc libscalar-number-perl libxstring-perl
+build	Install utilities	2025-11-08T13:43:30.1522625Z The following NEW packages will be installed:
+build	Install utilities	2025-11-08T13:43:30.1523682Z   cloc fonts-liberation2 graphviz libalgorithm-diff-perl
+build	Install utilities	2025-11-08T13:43:30.1524560Z   libalgorithm-diff-xs-perl libann0 libb-hooks-endofscope-perl
+build	Install utilities	2025-11-08T13:43:30.1525561Z   libb-hooks-op-check-perl libcdt5 libcgraph6 libclass-method-modifiers-perl
+build	Install utilities	2025-11-08T13:43:30.1526457Z   libclass-xsaccessor-perl libdevel-callchecker-perl
+build	Install utilities	2025-11-08T13:43:30.1527374Z   libdynaloader-functions-perl libgts-0.7-5t64 libgts-bin libgvc6 libgvpr2
+build	Install utilities	2025-11-08T13:43:30.1533059Z   libimport-into-perl liblab-gamut1 libmodule-implementation-perl
+build	Install utilities	2025-11-08T13:43:30.1533806Z   libmodule-runtime-perl libmoo-perl libnamespace-clean-perl
+build	Install utilities	2025-11-08T13:43:30.1534600Z   libpackage-stash-perl libpackage-stash-xs-perl libparallel-forkmanager-perl
+build	Install utilities	2025-11-08T13:43:30.1535577Z   libparams-classify-perl libpathplan4 libregexp-common-perl librole-tiny-perl
+build	Install utilities	2025-11-08T13:43:30.1536533Z   libsub-exporter-progressive-perl libsub-identify-perl libsub-name-perl
+build	Install utilities	2025-11-08T13:43:30.1537077Z   libsub-quote-perl libtry-tiny-perl libvariable-magic-perl
+build	Install utilities	2025-11-08T13:43:30.1757867Z 0 upgraded, 37 newly installed, 0 to remove and 22 not upgraded.
+build	Install utilities	2025-11-08T13:43:30.1758517Z Need to get 4493 kB of archives.
+build	Install utilities	2025-11-08T13:43:30.1759086Z After this operation, 11.0 MB of additional disk space will be used.
+build	Install utilities	2025-11-08T13:43:30.1759918Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+build	Install utilities	2025-11-08T13:43:30.2610796Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libalgorithm-diff-perl all 1.201-1 [41.8 kB]
+build	Install utilities	2025-11-08T13:43:30.3588066Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libclass-method-modifiers-perl all 2.15-1 [16.1 kB]
+build	Install utilities	2025-11-08T13:43:30.4328359Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libclass-xsaccessor-perl amd64 1.19-4build4 [33.1 kB]
+build	Install utilities	2025-11-08T13:43:30.5204088Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libb-hooks-op-check-perl amd64 0.22-3build1 [9518 B]
+build	Install utilities	2025-11-08T13:43:30.5903213Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libdynaloader-functions-perl all 0.003-3 [12.1 kB]
+build	Install utilities	2025-11-08T13:43:30.6624325Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libdevel-callchecker-perl amd64 0.008-2build3 [13.2 kB]
+build	Install utilities	2025-11-08T13:43:30.7344805Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libparams-classify-perl amd64 0.015-2build5 [20.1 kB]
+build	Install utilities	2025-11-08T13:43:30.8130471Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libmodule-runtime-perl all 0.016-2 [16.4 kB]
+build	Install utilities	2025-11-08T13:43:30.8871752Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libimport-into-perl all 1.002005-2 [10.7 kB]
+build	Install utilities	2025-11-08T13:43:30.9570106Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 librole-tiny-perl all 2.002004-1 [16.3 kB]
+build	Install utilities	2025-11-08T13:43:31.0314169Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsub-quote-perl all 2.006008-1ubuntu1 [20.7 kB]
+build	Install utilities	2025-11-08T13:43:31.1101185Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libmoo-perl all 2.005005-1 [47.4 kB]
+build	Install utilities	2025-11-08T13:43:31.2092471Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libparallel-forkmanager-perl all 2.02-1 [27.7 kB]
+build	Install utilities	2025-11-08T13:43:31.2904336Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libregexp-common-perl all 2017060201-3 [171 kB]
+build	Install utilities	2025-11-08T13:43:31.4683107Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 cloc all 1.98-1 [107 kB]
+build	Install utilities	2025-11-08T13:43:31.5567663Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-liberation2 all 1:2.1.5-3 [3418 B]
+build	Install utilities	2025-11-08T13:43:31.6217943Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libann0 amd64 1.1.2+doc-9build1 [25.5 kB]
+build	Install utilities	2025-11-08T13:43:31.6929081Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libcdt5 amd64 2.42.2-9ubuntu0.1 [21.6 kB]
+build	Install utilities	2025-11-08T13:43:31.7613607Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libcgraph6 amd64 2.42.2-9ubuntu0.1 [44.6 kB]
+build	Install utilities	2025-11-08T13:43:31.8350670Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libgts-0.7-5t64 amd64 0.7.6+darcs121130-5.2build1 [161 kB]
+build	Install utilities	2025-11-08T13:43:31.9358917Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libpathplan4 amd64 2.42.2-9ubuntu0.1 [24.0 kB]
+build	Install utilities	2025-11-08T13:43:32.0068512Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libgvc6 amd64 2.42.2-9ubuntu0.1 [716 kB]
+build	Install utilities	2025-11-08T13:43:32.2065627Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libgvpr2 amd64 2.42.2-9ubuntu0.1 [187 kB]
+build	Install utilities	2025-11-08T13:43:32.2826693Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 liblab-gamut1 amd64 2.42.2-9ubuntu0.1 [1886 kB]
+build	Install utilities	2025-11-08T13:43:32.4570800Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 graphviz amd64 2.42.2-9ubuntu0.1 [642 kB]
+build	Install utilities	2025-11-08T13:43:32.5352769Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libalgorithm-diff-xs-perl amd64 0.04-8build3 [11.2 kB]
+build	Install utilities	2025-11-08T13:43:32.6005420Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libtry-tiny-perl all 0.31-2 [20.8 kB]
+build	Install utilities	2025-11-08T13:43:32.6660790Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libmodule-implementation-perl all 0.09-2 [12.0 kB]
+build	Install utilities	2025-11-08T13:43:32.7313222Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsub-exporter-progressive-perl all 0.001013-3 [6718 B]
+build	Install utilities	2025-11-08T13:43:32.7966546Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libvariable-magic-perl amd64 0.63-1build3 [35.1 kB]
+build	Install utilities	2025-11-08T13:43:32.8640687Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libb-hooks-endofscope-perl all 0.28-1 [15.8 kB]
+build	Install utilities	2025-11-08T13:43:32.9293737Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libgts-bin amd64 0.7.6+darcs121130-5.2build1 [44.0 kB]
+build	Install utilities	2025-11-08T13:43:32.9946283Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libpackage-stash-perl all 0.40-1 [19.5 kB]
+build	Install utilities	2025-11-08T13:43:33.0598711Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsub-identify-perl amd64 0.14-3build3 [9786 B]
+build	Install utilities	2025-11-08T13:43:33.1252721Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsub-name-perl amd64 0.27-1build3 [10.8 kB]
+build	Install utilities	2025-11-08T13:43:33.1919790Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libnamespace-clean-perl all 0.27-2 [14.0 kB]
+build	Install utilities	2025-11-08T13:43:33.2580830Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libpackage-stash-xs-perl amd64 0.30-1build4 [18.7 kB]
+build	Install utilities	2025-11-08T13:43:33.5485038Z Fetched 4493 kB in 3s (1452 kB/s)
+build	Install utilities	2025-11-08T13:43:33.5705649Z Selecting previously unselected package libalgorithm-diff-perl.
+build	Install utilities	2025-11-08T13:43:33.5964057Z (Reading database ... 
+build	Install utilities	2025-11-08T13:43:33.5964599Z (Reading database ... 5%
+build	Install utilities	2025-11-08T13:43:33.5965036Z (Reading database ... 10%
+build	Install utilities	2025-11-08T13:43:33.5965468Z (Reading database ... 15%
+build	Install utilities	2025-11-08T13:43:33.5965930Z (Reading database ... 20%
+build	Install utilities	2025-11-08T13:43:33.5966353Z (Reading database ... 25%
+build	Install utilities	2025-11-08T13:43:33.5966633Z (Reading database ... 30%
+build	Install utilities	2025-11-08T13:43:33.5966893Z (Reading database ... 35%
+build	Install utilities	2025-11-08T13:43:33.5967159Z (Reading database ... 40%
+build	Install utilities	2025-11-08T13:43:33.5967420Z (Reading database ... 45%
+build	Install utilities	2025-11-08T13:43:33.5967684Z (Reading database ... 50%
+build	Install utilities	2025-11-08T13:43:33.6043532Z (Reading database ... 55%
+build	Install utilities	2025-11-08T13:43:33.8538874Z (Reading database ... 60%
+build	Install utilities	2025-11-08T13:43:34.0466502Z (Reading database ... 65%
+build	Install utilities	2025-11-08T13:43:34.2994734Z (Reading database ... 70%
+build	Install utilities	2025-11-08T13:43:34.4547851Z (Reading database ... 75%
+build	Install utilities	2025-11-08T13:43:34.6411722Z (Reading database ... 80%
+build	Install utilities	2025-11-08T13:43:34.9431564Z (Reading database ... 85%
+build	Install utilities	2025-11-08T13:43:35.0868992Z (Reading database ... 90%
+build	Install utilities	2025-11-08T13:43:35.3522479Z (Reading database ... 95%
+build	Install utilities	2025-11-08T13:43:35.3522841Z (Reading database ... 100%
+build	Install utilities	2025-11-08T13:43:35.3523221Z (Reading database ... 215802 files and directories currently installed.)
+build	Install utilities	2025-11-08T13:43:35.3566372Z Preparing to unpack .../00-libalgorithm-diff-perl_1.201-1_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.3591254Z Unpacking libalgorithm-diff-perl (1.201-1) ...
+build	Install utilities	2025-11-08T13:43:35.4074995Z Selecting previously unselected package libclass-method-modifiers-perl.
+build	Install utilities	2025-11-08T13:43:35.4207604Z Preparing to unpack .../01-libclass-method-modifiers-perl_2.15-1_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.4218528Z Unpacking libclass-method-modifiers-perl (2.15-1) ...
+build	Install utilities	2025-11-08T13:43:35.4493977Z Selecting previously unselected package libclass-xsaccessor-perl.
+build	Install utilities	2025-11-08T13:43:35.4625463Z Preparing to unpack .../02-libclass-xsaccessor-perl_1.19-4build4_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:35.4634991Z Unpacking libclass-xsaccessor-perl (1.19-4build4) ...
+build	Install utilities	2025-11-08T13:43:35.4964095Z Selecting previously unselected package libb-hooks-op-check-perl:amd64.
+build	Install utilities	2025-11-08T13:43:35.5097849Z Preparing to unpack .../03-libb-hooks-op-check-perl_0.22-3build1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:35.5106793Z Unpacking libb-hooks-op-check-perl:amd64 (0.22-3build1) ...
+build	Install utilities	2025-11-08T13:43:35.5357061Z Selecting previously unselected package libdynaloader-functions-perl.
+build	Install utilities	2025-11-08T13:43:35.5489730Z Preparing to unpack .../04-libdynaloader-functions-perl_0.003-3_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.5499987Z Unpacking libdynaloader-functions-perl (0.003-3) ...
+build	Install utilities	2025-11-08T13:43:35.5739563Z Selecting previously unselected package libdevel-callchecker-perl:amd64.
+build	Install utilities	2025-11-08T13:43:35.5879316Z Preparing to unpack .../05-libdevel-callchecker-perl_0.008-2build3_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:35.5893159Z Unpacking libdevel-callchecker-perl:amd64 (0.008-2build3) ...
+build	Install utilities	2025-11-08T13:43:35.6147117Z Selecting previously unselected package libparams-classify-perl:amd64.
+build	Install utilities	2025-11-08T13:43:35.6278150Z Preparing to unpack .../06-libparams-classify-perl_0.015-2build5_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:35.6287962Z Unpacking libparams-classify-perl:amd64 (0.015-2build5) ...
+build	Install utilities	2025-11-08T13:43:35.6533442Z Selecting previously unselected package libmodule-runtime-perl.
+build	Install utilities	2025-11-08T13:43:35.6664765Z Preparing to unpack .../07-libmodule-runtime-perl_0.016-2_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.6673796Z Unpacking libmodule-runtime-perl (0.016-2) ...
+build	Install utilities	2025-11-08T13:43:35.6882585Z Selecting previously unselected package libimport-into-perl.
+build	Install utilities	2025-11-08T13:43:35.7013738Z Preparing to unpack .../08-libimport-into-perl_1.002005-2_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.7022054Z Unpacking libimport-into-perl (1.002005-2) ...
+build	Install utilities	2025-11-08T13:43:35.7225475Z Selecting previously unselected package librole-tiny-perl.
+build	Install utilities	2025-11-08T13:43:35.7357023Z Preparing to unpack .../09-librole-tiny-perl_2.002004-1_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.7366602Z Unpacking librole-tiny-perl (2.002004-1) ...
+build	Install utilities	2025-11-08T13:43:35.7615025Z Selecting previously unselected package libsub-quote-perl.
+build	Install utilities	2025-11-08T13:43:35.7747560Z Preparing to unpack .../10-libsub-quote-perl_2.006008-1ubuntu1_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.7759497Z Unpacking libsub-quote-perl (2.006008-1ubuntu1) ...
+build	Install utilities	2025-11-08T13:43:35.8005375Z Selecting previously unselected package libmoo-perl.
+build	Install utilities	2025-11-08T13:43:35.8137005Z Preparing to unpack .../11-libmoo-perl_2.005005-1_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.8148394Z Unpacking libmoo-perl (2.005005-1) ...
+build	Install utilities	2025-11-08T13:43:35.8425723Z Selecting previously unselected package libparallel-forkmanager-perl.
+build	Install utilities	2025-11-08T13:43:35.8558341Z Preparing to unpack .../12-libparallel-forkmanager-perl_2.02-1_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.8566538Z Unpacking libparallel-forkmanager-perl (2.02-1) ...
+build	Install utilities	2025-11-08T13:43:35.8803595Z Selecting previously unselected package libregexp-common-perl.
+build	Install utilities	2025-11-08T13:43:35.8935126Z Preparing to unpack .../13-libregexp-common-perl_2017060201-3_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.8944309Z Unpacking libregexp-common-perl (2017060201-3) ...
+build	Install utilities	2025-11-08T13:43:35.9294151Z Selecting previously unselected package cloc.
+build	Install utilities	2025-11-08T13:43:35.9426491Z Preparing to unpack .../14-cloc_1.98-1_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.9435318Z Unpacking cloc (1.98-1) ...
+build	Install utilities	2025-11-08T13:43:35.9703133Z Selecting previously unselected package fonts-liberation2.
+build	Install utilities	2025-11-08T13:43:35.9834721Z Preparing to unpack .../15-fonts-liberation2_1%3a2.1.5-3_all.deb ...
+build	Install utilities	2025-11-08T13:43:35.9844120Z Unpacking fonts-liberation2 (1:2.1.5-3) ...
+build	Install utilities	2025-11-08T13:43:36.0043432Z Selecting previously unselected package libann0.
+build	Install utilities	2025-11-08T13:43:36.0174879Z Preparing to unpack .../16-libann0_1.1.2+doc-9build1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.0228136Z Unpacking libann0 (1.1.2+doc-9build1) ...
+build	Install utilities	2025-11-08T13:43:36.0443397Z Selecting previously unselected package libcdt5:amd64.
+build	Install utilities	2025-11-08T13:43:36.0575618Z Preparing to unpack .../17-libcdt5_2.42.2-9ubuntu0.1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.0586309Z Unpacking libcdt5:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:36.0806823Z Selecting previously unselected package libcgraph6:amd64.
+build	Install utilities	2025-11-08T13:43:36.0939479Z Preparing to unpack .../18-libcgraph6_2.42.2-9ubuntu0.1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.0951332Z Unpacking libcgraph6:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:36.1189542Z Selecting previously unselected package libgts-0.7-5t64:amd64.
+build	Install utilities	2025-11-08T13:43:36.1321147Z Preparing to unpack .../19-libgts-0.7-5t64_0.7.6+darcs121130-5.2build1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.1332071Z Unpacking libgts-0.7-5t64:amd64 (0.7.6+darcs121130-5.2build1) ...
+build	Install utilities	2025-11-08T13:43:36.1596645Z Selecting previously unselected package libpathplan4:amd64.
+build	Install utilities	2025-11-08T13:43:36.1728963Z Preparing to unpack .../20-libpathplan4_2.42.2-9ubuntu0.1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.1737938Z Unpacking libpathplan4:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:36.1955058Z Selecting previously unselected package libgvc6.
+build	Install utilities	2025-11-08T13:43:36.2085180Z Preparing to unpack .../21-libgvc6_2.42.2-9ubuntu0.1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.2094114Z Unpacking libgvc6 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:36.2412922Z Selecting previously unselected package libgvpr2:amd64.
+build	Install utilities	2025-11-08T13:43:36.2545245Z Preparing to unpack .../22-libgvpr2_2.42.2-9ubuntu0.1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.2557531Z Unpacking libgvpr2:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:36.2797542Z Selecting previously unselected package liblab-gamut1:amd64.
+build	Install utilities	2025-11-08T13:43:36.2928507Z Preparing to unpack .../23-liblab-gamut1_2.42.2-9ubuntu0.1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.2937572Z Unpacking liblab-gamut1:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:36.3252770Z Selecting previously unselected package graphviz.
+build	Install utilities	2025-11-08T13:43:36.3409838Z Preparing to unpack .../24-graphviz_2.42.2-9ubuntu0.1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.3418797Z Unpacking graphviz (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:36.5967945Z Selecting previously unselected package libalgorithm-diff-xs-perl:amd64.
+build	Install utilities	2025-11-08T13:43:36.6099403Z Preparing to unpack .../25-libalgorithm-diff-xs-perl_0.04-8build3_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.6108060Z Unpacking libalgorithm-diff-xs-perl:amd64 (0.04-8build3) ...
+build	Install utilities	2025-11-08T13:43:36.6311502Z Selecting previously unselected package libtry-tiny-perl.
+build	Install utilities	2025-11-08T13:43:36.6442926Z Preparing to unpack .../26-libtry-tiny-perl_0.31-2_all.deb ...
+build	Install utilities	2025-11-08T13:43:36.6451907Z Unpacking libtry-tiny-perl (0.31-2) ...
+build	Install utilities	2025-11-08T13:43:36.6664794Z Selecting previously unselected package libmodule-implementation-perl.
+build	Install utilities	2025-11-08T13:43:36.6796613Z Preparing to unpack .../27-libmodule-implementation-perl_0.09-2_all.deb ...
+build	Install utilities	2025-11-08T13:43:36.6807782Z Unpacking libmodule-implementation-perl (0.09-2) ...
+build	Install utilities	2025-11-08T13:43:36.7022513Z Selecting previously unselected package libsub-exporter-progressive-perl.
+build	Install utilities	2025-11-08T13:43:36.7154071Z Preparing to unpack .../28-libsub-exporter-progressive-perl_0.001013-3_all.deb ...
+build	Install utilities	2025-11-08T13:43:36.7162099Z Unpacking libsub-exporter-progressive-perl (0.001013-3) ...
+build	Install utilities	2025-11-08T13:43:36.7365858Z Selecting previously unselected package libvariable-magic-perl.
+build	Install utilities	2025-11-08T13:43:36.7497693Z Preparing to unpack .../29-libvariable-magic-perl_0.63-1build3_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.7507918Z Unpacking libvariable-magic-perl (0.63-1build3) ...
+build	Install utilities	2025-11-08T13:43:36.7720525Z Selecting previously unselected package libb-hooks-endofscope-perl.
+build	Install utilities	2025-11-08T13:43:36.7851009Z Preparing to unpack .../30-libb-hooks-endofscope-perl_0.28-1_all.deb ...
+build	Install utilities	2025-11-08T13:43:36.7859692Z Unpacking libb-hooks-endofscope-perl (0.28-1) ...
+build	Install utilities	2025-11-08T13:43:36.8076680Z Selecting previously unselected package libgts-bin.
+build	Install utilities	2025-11-08T13:43:36.8210697Z Preparing to unpack .../31-libgts-bin_0.7.6+darcs121130-5.2build1_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:36.8221041Z Unpacking libgts-bin (0.7.6+darcs121130-5.2build1) ...
+build	Install utilities	2025-11-08T13:43:36.9034153Z Selecting previously unselected package libpackage-stash-perl.
+build	Install utilities	2025-11-08T13:43:36.9207462Z Preparing to unpack .../32-libpackage-stash-perl_0.40-1_all.deb ...
+build	Install utilities	2025-11-08T13:43:36.9227498Z Unpacking libpackage-stash-perl (0.40-1) ...
+build	Install utilities	2025-11-08T13:43:36.9670506Z Selecting previously unselected package libsub-identify-perl.
+build	Install utilities	2025-11-08T13:43:36.9829743Z Preparing to unpack .../33-libsub-identify-perl_0.14-3build3_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:37.1409817Z Unpacking libsub-identify-perl (0.14-3build3) ...
+build	Install utilities	2025-11-08T13:43:37.1622128Z Selecting previously unselected package libsub-name-perl:amd64.
+build	Install utilities	2025-11-08T13:43:37.1753502Z Preparing to unpack .../34-libsub-name-perl_0.27-1build3_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:37.1765104Z Unpacking libsub-name-perl:amd64 (0.27-1build3) ...
+build	Install utilities	2025-11-08T13:43:37.1979392Z Selecting previously unselected package libnamespace-clean-perl.
+build	Install utilities	2025-11-08T13:43:37.2111444Z Preparing to unpack .../35-libnamespace-clean-perl_0.27-2_all.deb ...
+build	Install utilities	2025-11-08T13:43:37.2121245Z Unpacking libnamespace-clean-perl (0.27-2) ...
+build	Install utilities	2025-11-08T13:43:37.2333431Z Selecting previously unselected package libpackage-stash-xs-perl:amd64.
+build	Install utilities	2025-11-08T13:43:37.2464490Z Preparing to unpack .../36-libpackage-stash-xs-perl_0.30-1build4_amd64.deb ...
+build	Install utilities	2025-11-08T13:43:37.2474492Z Unpacking libpackage-stash-xs-perl:amd64 (0.30-1build4) ...
+build	Install utilities	2025-11-08T13:43:37.2897617Z Setting up libdynaloader-functions-perl (0.003-3) ...
+build	Install utilities	2025-11-08T13:43:37.2924187Z Setting up libclass-method-modifiers-perl (2.15-1) ...
+build	Install utilities	2025-11-08T13:43:37.2954198Z Setting up libalgorithm-diff-perl (1.201-1) ...
+build	Install utilities	2025-11-08T13:43:37.2981681Z Setting up libsub-identify-perl (0.14-3build3) ...
+build	Install utilities	2025-11-08T13:43:37.3008370Z Setting up liblab-gamut1:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:37.3033111Z Setting up libtry-tiny-perl (0.31-2) ...
+build	Install utilities	2025-11-08T13:43:37.3057921Z Setting up libregexp-common-perl (2017060201-3) ...
+build	Install utilities	2025-11-08T13:43:37.3083344Z Setting up libpackage-stash-xs-perl:amd64 (0.30-1build4) ...
+build	Install utilities	2025-11-08T13:43:37.3109124Z Setting up fonts-liberation2 (1:2.1.5-3) ...
+build	Install utilities	2025-11-08T13:43:37.3134206Z Setting up libpathplan4:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:37.3160743Z Setting up libann0 (1.1.2+doc-9build1) ...
+build	Install utilities	2025-11-08T13:43:37.3185754Z Setting up libvariable-magic-perl (0.63-1build3) ...
+build	Install utilities	2025-11-08T13:43:37.3212948Z Setting up libb-hooks-op-check-perl:amd64 (0.22-3build1) ...
+build	Install utilities	2025-11-08T13:43:37.3244869Z Setting up libsub-exporter-progressive-perl (0.001013-3) ...
+build	Install utilities	2025-11-08T13:43:37.3275028Z Setting up libsub-name-perl:amd64 (0.27-1build3) ...
+build	Install utilities	2025-11-08T13:43:37.3301724Z Setting up librole-tiny-perl (2.002004-1) ...
+build	Install utilities	2025-11-08T13:43:37.3327530Z Setting up libgts-0.7-5t64:amd64 (0.7.6+darcs121130-5.2build1) ...
+build	Install utilities	2025-11-08T13:43:37.3354725Z Setting up libsub-quote-perl (2.006008-1ubuntu1) ...
+build	Install utilities	2025-11-08T13:43:37.3381028Z Setting up libclass-xsaccessor-perl (1.19-4build4) ...
+build	Install utilities	2025-11-08T13:43:37.3403764Z Setting up libcdt5:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:37.3427528Z Setting up libcgraph6:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:37.3464037Z Setting up libalgorithm-diff-xs-perl:amd64 (0.04-8build3) ...
+build	Install utilities	2025-11-08T13:43:37.3491647Z Setting up libgts-bin (0.7.6+darcs121130-5.2build1) ...
+build	Install utilities	2025-11-08T13:43:37.3516643Z Setting up libdevel-callchecker-perl:amd64 (0.008-2build3) ...
+build	Install utilities	2025-11-08T13:43:37.3543952Z Setting up libgvc6 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:37.4916309Z Setting up libgvpr2:amd64 (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:37.4943454Z Setting up graphviz (2.42.2-9ubuntu0.1) ...
+build	Install utilities	2025-11-08T13:43:37.4982512Z Setting up libparams-classify-perl:amd64 (0.015-2build5) ...
+build	Install utilities	2025-11-08T13:43:37.5006612Z Setting up libmodule-runtime-perl (0.016-2) ...
+build	Install utilities	2025-11-08T13:43:37.5029926Z Setting up libmodule-implementation-perl (0.09-2) ...
+build	Install utilities	2025-11-08T13:43:37.5053455Z Setting up libpackage-stash-perl (0.40-1) ...
+build	Install utilities	2025-11-08T13:43:37.5081825Z Setting up libimport-into-perl (1.002005-2) ...
+build	Install utilities	2025-11-08T13:43:37.5108534Z Setting up libmoo-perl (2.005005-1) ...
+build	Install utilities	2025-11-08T13:43:37.5135310Z Setting up libparallel-forkmanager-perl (2.02-1) ...
+build	Install utilities	2025-11-08T13:43:37.5159871Z Setting up libb-hooks-endofscope-perl (0.28-1) ...
+build	Install utilities	2025-11-08T13:43:37.5184415Z Setting up cloc (1.98-1) ...
+build	Install utilities	2025-11-08T13:43:37.5208262Z Setting up libnamespace-clean-perl (0.27-2) ...
+build	Install utilities	2025-11-08T13:43:37.5238384Z Processing triggers for man-db (2.12.0-4build2) ...
+build	Install utilities	2025-11-08T13:44:51.2624765Z Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+build	Install utilities	2025-11-08T13:44:53.2011159Z 
+build	Install utilities	2025-11-08T13:44:53.2011626Z Running kernel seems to be up-to-date.
+build	Install utilities	2025-11-08T13:44:53.2011968Z 
+build	Install utilities	2025-11-08T13:44:53.2012105Z No services need to be restarted.
+build	Install utilities	2025-11-08T13:44:53.2012371Z 
+build	Install utilities	2025-11-08T13:44:53.2012505Z No containers need to be restarted.
+build	Install utilities	2025-11-08T13:44:53.2012693Z 
+build	Install utilities	2025-11-08T13:44:53.2012805Z No user sessions are running outdated binaries.
+build	Install utilities	2025-11-08T13:44:53.2013015Z 
+build	Install utilities	2025-11-08T13:44:53.2013211Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+build	Prep review dir	∩╗┐2025-11-08T13:44:54.1407234Z ##[group]Run mkdir -p review/github-workflows
+build	Prep review dir	2025-11-08T13:44:54.1407584Z [36;1mmkdir -p review/github-workflows[0m
+build	Prep review dir	2025-11-08T13:44:54.1439713Z shell: /usr/bin/bash -e {0}
+build	Prep review dir	2025-11-08T13:44:54.1439935Z env:
+build	Prep review dir	2025-11-08T13:44:54.1440164Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Prep review dir	2025-11-08T13:44:54.1440738Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Prep review dir	2025-11-08T13:44:54.1441130Z   REVIEW_AZURE_CLIENT_ID: 750452fa-c519-455f-b77d-18f9707e2f39
+build	Prep review dir	2025-11-08T13:44:54.1441424Z ##[endgroup]
+build	File tree	∩╗┐2025-11-08T13:44:54.1523985Z ##[group]Run tree -a -I ".git|node_modules|bin|obj|.terraform|.venv|dist|build" > review/tree.txt
+build	File tree	2025-11-08T13:44:54.1524570Z [36;1mtree -a -I ".git|node_modules|bin|obj|.terraform|.venv|dist|build" > review/tree.txt[0m
+build	File tree	2025-11-08T13:44:54.1553399Z shell: /usr/bin/bash -e {0}
+build	File tree	2025-11-08T13:44:54.1553622Z env:
+build	File tree	2025-11-08T13:44:54.1553861Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	File tree	2025-11-08T13:44:54.1554255Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	File tree	2025-11-08T13:44:54.1554633Z   REVIEW_AZURE_CLIENT_ID: 750452fa-c519-455f-b77d-18f9707e2f39
+build	File tree	2025-11-08T13:44:54.1554916Z ##[endgroup]
+build	Line counts	∩╗┐2025-11-08T13:44:54.1750386Z ##[group]Run cloc --json --exclude-dir=.git,node_modules,bin,obj,.terraform,.venv,dist,build . > review/cloc.json
+build	Line counts	2025-11-08T13:44:54.1751110Z [36;1mcloc --json --exclude-dir=.git,node_modules,bin,obj,.terraform,.venv,dist,build . > review/cloc.json[0m
+build	Line counts	2025-11-08T13:44:54.1781852Z shell: /usr/bin/bash -e {0}
+build	Line counts	2025-11-08T13:44:54.1782084Z env:
+build	Line counts	2025-11-08T13:44:54.1782312Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Line counts	2025-11-08T13:44:54.1782708Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Line counts	2025-11-08T13:44:54.1783101Z   REVIEW_AZURE_CLIENT_ID: 750452fa-c519-455f-b77d-18f9707e2f39
+build	Line counts	2025-11-08T13:44:54.1783382Z ##[endgroup]
+build	Git log (90d)	∩╗┐2025-11-08T13:44:54.5506265Z ##[group]Run git log --since="90 days ago" --pretty=format:"%h %ad %an %s" --date=short > review/gitlog_90d.txt
+build	Git log (90d)	2025-11-08T13:44:54.5506911Z [36;1mgit log --since="90 days ago" --pretty=format:"%h %ad %an %s" --date=short > review/gitlog_90d.txt[0m
+build	Git log (90d)	2025-11-08T13:44:54.5538634Z shell: /usr/bin/bash -e {0}
+build	Git log (90d)	2025-11-08T13:44:54.5538862Z env:
+build	Git log (90d)	2025-11-08T13:44:54.5539109Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Git log (90d)	2025-11-08T13:44:54.5539686Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Git log (90d)	2025-11-08T13:44:54.5540068Z   REVIEW_AZURE_CLIENT_ID: 750452fa-c519-455f-b77d-18f9707e2f39
+build	Git log (90d)	2025-11-08T13:44:54.5540353Z ##[endgroup]
+build	Dump workflows	∩╗┐2025-11-08T13:44:54.5630960Z ##[group]Run if [ -d .github/workflows ]; then
+build	Dump workflows	2025-11-08T13:44:54.5631290Z [36;1mif [ -d .github/workflows ]; then[0m
+build	Dump workflows	2025-11-08T13:44:54.5631612Z [36;1m  cp -r .github/workflows review/github-workflows/workflows[0m
+build	Dump workflows	2025-11-08T13:44:54.5631913Z [36;1mfi[0m
+build	Dump workflows	2025-11-08T13:44:54.5660875Z shell: /usr/bin/bash -e {0}
+build	Dump workflows	2025-11-08T13:44:54.5661134Z env:
+build	Dump workflows	2025-11-08T13:44:54.5661371Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Dump workflows	2025-11-08T13:44:54.5661791Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Dump workflows	2025-11-08T13:44:54.5662185Z   REVIEW_AZURE_CLIENT_ID: 750452fa-c519-455f-b77d-18f9707e2f39
+build	Dump workflows	2025-11-08T13:44:54.5662464Z ##[endgroup]
+build	Copy OIDC reference	∩╗┐2025-11-08T13:44:54.5746628Z ##[group]Run if [ -f OIDC-SETUP.md ]; then
+build	Copy OIDC reference	2025-11-08T13:44:54.5746942Z [36;1mif [ -f OIDC-SETUP.md ]; then[0m
+build	Copy OIDC reference	2025-11-08T13:44:54.5747221Z [36;1m  cp OIDC-SETUP.md review/OIDC-SETUP.md[0m
+build	Copy OIDC reference	2025-11-08T13:44:54.5747492Z [36;1mfi[0m
+build	Copy OIDC reference	2025-11-08T13:44:54.5776421Z shell: /usr/bin/bash -e {0}
+build	Copy OIDC reference	2025-11-08T13:44:54.5776646Z env:
+build	Copy OIDC reference	2025-11-08T13:44:54.5776879Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Copy OIDC reference	2025-11-08T13:44:54.5777283Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Copy OIDC reference	2025-11-08T13:44:54.5777663Z   REVIEW_AZURE_CLIENT_ID: 750452fa-c519-455f-b77d-18f9707e2f39
+build	Copy OIDC reference	2025-11-08T13:44:54.5777949Z ##[endgroup]
+build	Azure Login (OIDC)	∩╗┐2025-11-08T13:44:54.5890167Z ##[group]Run azure/login@v2
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5890398Z with:
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5890599Z   client-id: 750452fa-c519-455f-b77d-18f9707e2f39
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5890885Z   tenant-id: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5891190Z   subscription-id: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5891650Z   enable-AzPSSession: false
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5891861Z   environment: azurecloud
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5892067Z   allow-no-subscriptions: false
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5892313Z   audience: api://AzureADTokenExchange
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5892560Z   auth-type: SERVICE_PRINCIPAL
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5892757Z env:
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5892975Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5893347Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5893778Z   REVIEW_AZURE_CLIENT_ID: 750452fa-c519-455f-b77d-18f9707e2f39
+build	Azure Login (OIDC)	2025-11-08T13:44:54.5894078Z ##[endgroup]
+build	Azure Login (OIDC)	2025-11-08T13:44:54.6278326Z Running Azure CLI Login.
+build	Azure Login (OIDC)	2025-11-08T13:45:16.9377653Z [command]/usr/bin/az cloud set -n azurecloud
+build	Azure Login (OIDC)	2025-11-08T13:45:17.1693158Z Done setting cloud: "azurecloud"
+build	Azure Login (OIDC)	2025-11-08T13:45:17.4480357Z Federated token details:
+build	Azure Login (OIDC)	2025-11-08T13:45:17.4481070Z  issuer - https://token.actions.githubusercontent.com
+build	Azure Login (OIDC)	2025-11-08T13:45:17.4481846Z  subject claim - repo:ChrisStephens1971/saas202544:ref:refs/heads/ci/fix-oidc-plan
+build	Azure Login (OIDC)	2025-11-08T13:45:17.4482546Z  audience - api://AzureADTokenExchange
+build	Azure Login (OIDC)	2025-11-08T13:45:17.4483383Z  job_workflow_ref - ChrisStephens1971/saas202544/.github/workflows/review-pack.yml@refs/heads/ci/fix-oidc-plan
+build	Azure Login (OIDC)	2025-11-08T13:45:17.4484249Z Attempting Azure CLI login by using OIDC...
+build	Azure Login (OIDC)	2025-11-08T13:45:18.2760179Z ##[error]AADSTS700213: No matching federated identity record found for presented assertion subject 'repo:ChrisStephens1971/saas202544:ref:refs/heads/ci/fix-oidc-plan'. Check your federated identity credential Subject, Audience and Issuer against the presented assertion. https://learn.microsoft.com/entra/workload-id/workload-identity-federation Trace ID: 6f912a5a-b477-4951-bda3-5e58c84efa00 Correlation ID: 4e055c16-2384-4dfa-892f-500ec3fd84fb Timestamp: 2025-11-08 13:45:17Z
+build	Azure Login (OIDC)	
+build	Azure Login (OIDC)	2025-11-08T13:45:18.2769067Z ##[error]Run the command below to authenticate interactively; additional arguments may be added as needed:
+build	Azure Login (OIDC)	az logout
+build	Azure Login (OIDC)	az login
+build	Azure Login (OIDC)	
+build	Azure Login (OIDC)	2025-11-08T13:45:18.3574935Z ##[error]Login failed with Error: The process '/usr/bin/az' failed with exit code 1. Double check if the 'auth-type' is correct. Refer to https://github.com/Azure/login#readme for more information.
+build	Collect gitleaks report	∩╗┐2025-11-08T13:45:18.3682851Z ##[group]Run if [ -f results.sarif ]; then
+build	Collect gitleaks report	2025-11-08T13:45:18.3683197Z [36;1mif [ -f results.sarif ]; then[0m
+build	Collect gitleaks report	2025-11-08T13:45:18.3683476Z [36;1m  mv results.sarif review/gitleaks.sarif[0m
+build	Collect gitleaks report	2025-11-08T13:45:18.3683736Z [36;1melse[0m
+build	Collect gitleaks report	2025-11-08T13:45:18.3683939Z [36;1m  echo '{"runs":[]}' > review/gitleaks.sarif[0m
+build	Collect gitleaks report	2025-11-08T13:45:18.3684192Z [36;1mfi[0m
+build	Collect gitleaks report	2025-11-08T13:45:18.3715950Z shell: /usr/bin/bash -e {0}
+build	Collect gitleaks report	2025-11-08T13:45:18.3716185Z env:
+build	Collect gitleaks report	2025-11-08T13:45:18.3716421Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Collect gitleaks report	2025-11-08T13:45:18.3716827Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Collect gitleaks report	2025-11-08T13:45:18.3717462Z   REVIEW_AZURE_CLIENT_ID: ***
+build	Collect gitleaks report	2025-11-08T13:45:18.3717682Z ##[endgroup]
+build	Optional Azure inventory	∩╗┐2025-11-08T13:45:18.3790177Z ##[group]Run if [ -n "${AZURE_SUBSCRIPTION_ID}" ] && [ -n "${AZURE_TENANT_ID}" ] && [ -n "${AZURE_CLIENT_ID}" ]; then
+build	Optional Azure inventory	2025-11-08T13:45:18.3790830Z [36;1mif [ -n "${AZURE_SUBSCRIPTION_ID}" ] && [ -n "${AZURE_TENANT_ID}" ] && [ -n "${AZURE_CLIENT_ID}" ]; then[0m
+build	Optional Azure inventory	2025-11-08T13:45:18.3791281Z [36;1m  az account set -s "${AZURE_SUBSCRIPTION_ID}" || true[0m
+build	Optional Azure inventory	2025-11-08T13:45:18.3791622Z [36;1m  az extension add -n resource-graph -y || true[0m
+build	Optional Azure inventory	2025-11-08T13:45:18.3792314Z [36;1m  az graph query -q "Resources | project name,type,location,resourceGroup,subscriptionId,tostring(tags)" --first 5000 -o table > review/azure_resources.txt || true[0m
+build	Optional Azure inventory	2025-11-08T13:45:18.3793076Z [36;1m  az role assignment list -o json > review/role_assignments.json || true[0m
+build	Optional Azure inventory	2025-11-08T13:45:18.3793424Z [36;1melse[0m
+build	Optional Azure inventory	2025-11-08T13:45:18.3793730Z [36;1m  echo "Azure subscription variables not configured; skipping inventory."[0m
+build	Optional Azure inventory	2025-11-08T13:45:18.3794077Z [36;1mfi[0m
+build	Optional Azure inventory	2025-11-08T13:45:18.3822427Z shell: /usr/bin/bash -e {0}
+build	Optional Azure inventory	2025-11-08T13:45:18.3822940Z env:
+build	Optional Azure inventory	2025-11-08T13:45:18.3823183Z   REVIEW_AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Optional Azure inventory	2025-11-08T13:45:18.3823588Z   REVIEW_AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Optional Azure inventory	2025-11-08T13:45:18.3824042Z   REVIEW_AZURE_CLIENT_ID: ***
+build	Optional Azure inventory	2025-11-08T13:45:18.3824325Z   AZURE_SUBSCRIPTION_ID: b3fc75c0-c060-4a53-a7cf-5f6ae22fefec
+build	Optional Azure inventory	2025-11-08T13:45:18.3824668Z   AZURE_TENANT_ID: 04c5f804-d3ee-4b0b-b7fa-772496bb7a34
+build	Optional Azure inventory	2025-11-08T13:45:18.3824987Z   AZURE_CLIENT_ID: ***
+build	Optional Azure inventory	2025-11-08T13:45:18.3825172Z ##[endgroup]
+build	Optional Azure inventory	2025-11-08T13:45:18.7213368Z ERROR: The subscription of 'b3fc75c0-c060-4a53-a7cf-5f6ae22fefec' doesn't exist in cloud 'AzureCloud'.
+build	Optional Azure inventory	2025-11-08T13:45:25.2929010Z ERROR: Value of --first has to be between 1 and 1000.
+build	Optional Azure inventory	2025-11-08T13:45:26.4188921Z ERROR: Please run 'az login' to setup account.
+build	Post Azure Login (OIDC)	∩╗┐2025-11-08T13:45:26.5216909Z Post job cleanup.
+build	Post Azure Login (OIDC)	2025-11-08T13:45:26.5616453Z Clearing azure cli accounts from the local cache.
+build	Post Azure Login (OIDC)	2025-11-08T13:45:26.5625314Z [command]/usr/bin/az account clear
+build	Post Checkout	∩╗┐2025-11-08T13:45:27.0786405Z Post job cleanup.
+build	Post Checkout	2025-11-08T13:45:27.1754736Z [command]/usr/bin/git version
+build	Post Checkout	2025-11-08T13:45:27.1791202Z git version 2.51.2
+build	Post Checkout	2025-11-08T13:45:27.1836487Z Temporarily overriding HOME='/home/runner/work/_temp/9b0274d8-e6c8-4e0a-a801-0daf32a038cc' before making global git config changes
+build	Post Checkout	2025-11-08T13:45:27.1837790Z Adding repository directory to the temporary git global config as a safe directory
+build	Post Checkout	2025-11-08T13:45:27.1851325Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/saas202544/saas202544
+build	Post Checkout	2025-11-08T13:45:27.1887176Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+build	Post Checkout	2025-11-08T13:45:27.1919730Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+build	Post Checkout	2025-11-08T13:45:27.2157318Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+build	Post Checkout	2025-11-08T13:45:27.2180946Z http.https://github.com/.extraheader
+build	Post Checkout	2025-11-08T13:45:27.2193921Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+build	Post Checkout	2025-11-08T13:45:27.2226271Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+build	Complete job	∩╗┐2025-11-08T13:45:27.2558745Z Cleaning up orphan processes
+build	Complete job	2025-11-08T13:45:27.3220385Z Terminate orphan process: pid (3690) (python3)
