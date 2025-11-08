@@ -2,6 +2,8 @@ name: review-pack
 
 on:
   workflow_dispatch: {}
+  pull_request:
+    branches: [master, main]
 
 permissions:
   contents: read
@@ -88,6 +90,8 @@ jobs:
 
       - name: Secret scan (gitleaks)
         uses: gitleaks/gitleaks-action@v2
+        with:
+          args: detect --no-color --report-path review/gitleaks.sarif --report-format sarif
         continue-on-error: true
 
       - name: Collect gitleaks report
@@ -95,8 +99,19 @@ jobs:
         run: |
           if [ -f results.sarif ]; then
             mv results.sarif review/gitleaks.sarif
-          else
-            echo '{"runs":[]}' > review/gitleaks.sarif
+          elif [ ! -f review/gitleaks.sarif ]; then
+            echo '{"runs":[{"tool":{"driver":{"name":"gitleaks"}},"results":[]}]}' > review/gitleaks.sarif
+          fi
+
+      - name: Check for critical secrets
+        if: always()
+        run: |
+          if [ -f review/gitleaks.sarif ]; then
+            FINDINGS=$(jq '.runs[0].results | length' review/gitleaks.sarif 2>/dev/null || echo "0")
+            echo "::notice::Gitleaks found $FINDINGS potential secret(s)"
+            if [ "$FINDINGS" -gt 0 ]; then
+              echo "::warning::Review gitleaks.sarif in the artifact for details"
+            fi
           fi
 
       - name: Optional Azure inventory
@@ -109,7 +124,7 @@ jobs:
           if [ -n "${AZURE_SUBSCRIPTION_ID}" ] && [ -n "${AZURE_TENANT_ID}" ] && [ -n "${AZURE_CLIENT_ID}" ]; then
             az account set -s "${AZURE_SUBSCRIPTION_ID}" || true
             az extension add -n resource-graph -y || true
-            az graph query -q "Resources | project name,type,location,resourceGroup,subscriptionId,tostring(tags)" --first 5000 -o table > review/azure_resources.txt || true
+            az graph query -q "Resources | project name,type,location,resourceGroup,subscriptionId,tostring(tags)" --first 1000 -o table > review/azure_resources.txt || true
             az role assignment list -o json > review/role_assignments.json || true
           else
             echo "Azure subscription variables not configured; skipping inventory."
@@ -123,3 +138,4 @@ jobs:
         with:
           name: review-pack
           path: review-pack.zip
+
