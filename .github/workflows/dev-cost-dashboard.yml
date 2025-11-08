@@ -88,7 +88,8 @@ jobs:
 
           echo "$res" > cost/dev-cost.json
 
-          total=$(jq -r '[.properties.rows[][2]]|add//0' cost/dev-cost.json)
+          # REST API returns: [Cost, ServiceName, ResourceGroupName, Currency]
+          total=$(jq -r '[.properties.rows[][0]]|add//0' cost/dev-cost.json)
           echo "total=${total}" >> "$GITHUB_OUTPUT"
 
       - name: Post summary table
@@ -100,7 +101,7 @@ jobs:
             echo ""
             echo "| Service | Resource Group | Cost |"
             echo "|---|---|---:|"
-            jq -r '.properties.rows | sort_by(.[2]) | reverse | .[:10][] | "| \(.[0]) | \(.[1]) | $\(.[2]) |"' cost/dev-cost.json
+            jq -r '.properties.rows | sort_by(.[0]) | reverse | .[:10][] | "| \(.[1]) | \(.[2]) | $\(.[0]) |"' cost/dev-cost.json
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build HTML email body
@@ -134,7 +135,8 @@ jobs:
           </html>
           EOF
 
-          rows=$(jq -r '.properties.rows[] | "<tr><td>\(.[0])</td><td>\(.[1])</td><td class=\"cost\">$\(.[2])</td></tr>"' cost/dev-cost.json)
+          # Sort by cost descending, format as HTML table rows
+          rows=$(jq -r '.properties.rows | sort_by(.[0]) | reverse | .[] | "<tr><td>\(.[1])</td><td>\(.[2])</td><td class=\"cost\">$\(.[0])</td></tr>"' cost/dev-cost.json)
           timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
           {
