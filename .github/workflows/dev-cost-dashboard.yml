@@ -53,7 +53,7 @@ jobs:
             scope="/subscriptions/${{ vars.AZURE_SUBSCRIPTION_ID }}"
           fi
 
-          echo "Querying costs for scope: $scope"
+          echo "Querying costs for scope: ${scope}"
 
           res=$(az costmanagement query --type ActualCost --timeframe MonthToDate --scope "$scope" \
             --dataset '{"granularity":"None","aggregation":{"totalCost":{"name":"Cost","function":"Sum"}},"grouping":[{"type":"Dimension","name":"ServiceName"},{"type":"Dimension","name":"ResourceGroupName"}]}')
@@ -61,7 +61,7 @@ jobs:
           echo "$res" > cost/dev-cost.json
 
           total=$(jq -r '[.properties.rows[][2]]|add' cost/dev-cost.json)
-          echo "total=$total" >> $GITHUB_OUTPUT
+          echo "total=${total}" >> "$GITHUB_OUTPUT"
 
       - name: Post summary table
         run: |
@@ -107,9 +107,12 @@ jobs:
           rows=$(jq -r '.properties.rows[] | "<tr><td>\(.[0])</td><td>\(.[1])</td><td class=\"cost\">$\(.[2])</td></tr>"' cost/dev-cost.json)
           timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
-          sed -i "s|TOTAL_COST|${{ steps.cost.outputs.total }}|g" cost/email-body.html
-          sed -i "s|TABLE_ROWS|$rows|g" cost/email-body.html
-          sed -i "s|TIMESTAMP|$timestamp|g" cost/email-body.html
+          {
+            sed "s|TOTAL_COST|${{ steps.cost.outputs.total }}|g" cost/email-body.html | \
+            sed "s|TABLE_ROWS|${rows}|g" | \
+            sed "s|TIMESTAMP|${timestamp}|g"
+          } > cost/email-body.tmp
+          mv cost/email-body.tmp cost/email-body.html
 
       - name: Send email via Microsoft Graph
         run: |
