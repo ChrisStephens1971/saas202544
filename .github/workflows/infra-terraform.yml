@@ -1,6 +1,7 @@
 ﻿name: infra-terraform
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches: [main]
@@ -46,3 +47,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Apply is intentionally omitted in this PR
         run: echo "Apply only runs on main after merge."
+
+
