@@ -1,0 +1,8 @@
+﻿dist/
+build/
+node_modules/
+.terraform/
+*.tfstate*
+*.zip
+review/
+review-pack-artifacts/
