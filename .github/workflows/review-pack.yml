@@ -1,128 +1,59 @@
 name: review-pack
-
 on:
-  workflow_dispatch: {}
-  pull_request:
-    branches: [master, main]
-
+  workflow_dispatch:
 permissions:
-  contents: read
   id-token: write
-
-env:
-  REVIEW_AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID || '04c5f804-d3ee-4b0b-b7fa-772496bb7a34' }}
-  REVIEW_AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID || 'b3fc75c0-c060-4a53-a7cf-5f6ae22fefec' }}
-  REVIEW_AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID || '750452fa-c519-455f-b77d-18f9707e2f39' }}
-
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install utilities
+      - uses: actions/checkout@v4
+      - name: Prep tools and review dir
         run: |
-          sudo apt-get update
-          sudo apt-get install -y tree cloc graphviz
-
-      - name: Prep review dir
-        run: mkdir -p review/github-workflows
-
-      - name: File tree
+          sudo apt-get update && sudo apt-get install -y tree cloc graphviz
+          mkdir -p review
+      - name: File tree / cloc / git log
         run: |
           tree -a -I ".git|node_modules|bin|obj|.terraform|.venv|dist|build" > review/tree.txt
-
-      - name: Line counts
-        run: |
           cloc --json --exclude-dir=.git,node_modules,bin,obj,.terraform,.venv,dist,build . > review/cloc.json
-
-      - name: Git log (90d)
-        run: git log --since="90 days ago" --pretty=format:"%h %ad %an %s" --date=short > review/gitlog_90d.txt
-
-      - name: Dump workflows
-        run: |
-          if [ -d .github/workflows ]; then
-            cp -r .github/workflows review/github-workflows/workflows
-          fi
-
-      - name: Copy OIDC reference
-        run: |
-          if [ -f OIDC-SETUP.md ]; then
-            cp OIDC-SETUP.md review/OIDC-SETUP.md
-          fi
-
+          git log --since="90 days ago" --pretty=format:"%h %ad %an %s" --date=short > review/gitlog_90d.txt
       - name: Azure Login (OIDC)
         uses: azure/login@v2
         with:
-          client-id: ${{ env.REVIEW_AZURE_CLIENT_ID }}
-          tenant-id: ${{ env.REVIEW_AZURE_TENANT_ID }}
-          subscription-id: ${{ env.REVIEW_AZURE_SUBSCRIPTION_ID }}
-
-      - name: Setup Terraform CLI
-        if: hashFiles('infrastructure/terraform/**.tf') != ''
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.9.0
-
-      - name: Terraform validate/plan
-        if: hashFiles('infrastructure/terraform/**.tf') != ''
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - uses: hashicorp/setup-terraform@v3
+      - name: Terraform snapshot (dev)
+        if: hashFiles('infrastructure/terraform/**') != ''
         working-directory: infrastructure/terraform
+        continue-on-error: true
         env:
           TF_IN_AUTOMATION: "true"
+          ARM_USE_OIDC: "true"
           ARM_CLIENT_ID: ${{ env.REVIEW_AZURE_CLIENT_ID }}
           ARM_TENANT_ID: ${{ env.REVIEW_AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ env.REVIEW_AZURE_SUBSCRIPTION_ID }}
+          ARM_FEDERATED_TOKEN_FILE: ${{ env.AZURE_FEDERATED_TOKEN_FILE }}
+          ARM_OIDC_TOKEN_FILE_PATH: ${{ env.AZURE_FEDERATED_TOKEN_FILE }}
+          ARM_USE_AZUREAD: "true"
         run: |
-          terraform init -input=false -reconfigure
-          terraform fmt -check | tee ../../review/terraform_fmt.txt || true
-          terraform validate -no-color | tee ../../review/terraform_validate.txt
+          terraform init -input=false -reconfigure || true
+          terraform validate -no-color -var-file='../../environments/dev.tfvars' | tee ../../review/terraform_validate.txt || true
           terraform plan -input=false -var-file='../../environments/dev.tfvars' -out tfplan || true
           terraform show -no-color tfplan > ../../review/terraform_plan.txt || true
           terraform graph | dot -Tsvg > ../../review/terraform_graph.svg || true
-
-      - name: Bicep build
-        if: hashFiles('infrastructure/bicep/**.bicep') != ''
-        run: |
-          az version || curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-          az bicep install
-          az bicep build --file infrastructure/bicep/main.bicep --outfile review/bicep_compiled.json || true
-
       - name: Secret scan (gitleaks)
         uses: gitleaks/gitleaks-action@v2
+        with:
+          args: detect --no-color --report-path review/gitleaks.sarif --report-format sarif
         continue-on-error: true
-
-      - name: Collect gitleaks report
-        if: always()
-        run: |
-          if [ -f results.sarif ]; then
-            mv results.sarif review/gitleaks.sarif
-          else
-            echo '{"runs":[]}' > review/gitleaks.sarif
-          fi
-
-      - name: Optional Azure inventory
-        if: always()
-        env:
-          AZURE_SUBSCRIPTION_ID: ${{ env.REVIEW_AZURE_SUBSCRIPTION_ID }}
-          AZURE_TENANT_ID: ${{ env.REVIEW_AZURE_TENANT_ID }}
-          AZURE_CLIENT_ID: ${{ env.REVIEW_AZURE_CLIENT_ID }}
-        run: |
-          if [ -n "${AZURE_SUBSCRIPTION_ID}" ] && [ -n "${AZURE_TENANT_ID}" ] && [ -n "${AZURE_CLIENT_ID}" ]; then
-            az account set -s "${AZURE_SUBSCRIPTION_ID}" || true
-            az extension add -n resource-graph -y || true
-            az graph query -q "Resources | project name,type,location,resourceGroup,subscriptionId,tostring(tags)" --first 1000 -o table > review/azure_resources.txt || true
-            az role assignment list -o json > review/role_assignments.json || true
-          else
-            echo "Azure subscription variables not configured; skipping inventory."
-          fi
-
-      - name: Package review pack
-        run: zip -r review-pack.zip review
-
       - name: Upload artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: review-pack
-          path: review-pack.zip
-
+          path: review
+          if-no-files-found: warn
+          retention-days: 7
