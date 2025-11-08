@@ -69,12 +69,14 @@ jobs:
       - name: Terraform Format Check
         id: fmt
         run: terraform fmt -check -recursive
-        continue-on-error: true
 
       - name: Terraform Init
         id: init
         run: |
           terraform init \
+            -input=false \
+            -reconfigure \
+            -lock-timeout=300s \
             -backend-config="subscription_id=${{ vars.AZURE_SUBSCRIPTION_ID }}" \
             -backend-config="tenant_id=${{ vars.AZURE_TENANT_ID }}"
 
@@ -86,7 +88,9 @@ jobs:
         id: plan
         run: |
           terraform plan \
+            -input=false \
             -var-file=../../environments/${{ matrix.environment }}.tfvars \
+            -detailed-exitcode \
             -out=tfplan \
             -no-color
         env:
@@ -94,6 +98,14 @@ jobs:
           ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
           ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        continue-on-error: true
+
+      - name: Check for Drift
+        if: steps.plan.outcome == 'failure'
+        run: |
+          echo "::error::Terraform plan failed or detected drift (exit code 2)"
+          echo "Review the plan output for changes or errors"
+          exit 1
 
       - name: Save Plan Output
         id: show-plan
