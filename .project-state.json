@@ -1,0 +1,25 @@
+{
+  "projectId": "saas202544",
+  "created": "2025-11-08",
+  "templateType": "azure",
+  "version": "2.0",
+  "state": {
+    "hasGreeted": false,
+    "setupComplete": false,
+    "currentSprint": null,
+    "phase": "planning"
+  },
+  "metadata": {
+    "tradeName": null,
+    "teamType": null,
+    "multiTenant": false,
+    "tenantModel": "single"
+  },
+  "ports": {
+    "frontend": "3044",
+    "backend": "8044",
+    "postgres": "5444",
+    "redis": "6444",
+    "mongo": "27044"
+  }
+}

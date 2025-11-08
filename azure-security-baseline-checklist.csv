@@ -1,0 +1,151 @@
+Category,Task,Priority,Status,Owner,DueDate,Notes,PlaybookReference
+Identity - Day 0,Create Azure AD/Entra tenant,Critical,Not Started,,"",Verify custom domain,Day 0: Step 1
+Identity - Day 0,Create two break-glass accounts,Critical,Not Started,,"",Store offline + test,Day 0: Step 2
+Identity - Day 0,Enable Security Defaults (temporary),High,Not Started,,"",Disable after CA setup,Day 0: Step 3
+Identity - Day 0,Disable legacy authentication,Critical,Not Started,,"",Block SMTP + basic auth,Day 0: Step 4
+Identity - Day 0,Configure Conditional Access - MFA for all,Critical,Not Started,,"",Exclude break-glass,Day 0: Step 5
+Identity - Day 0,Configure Conditional Access - Admin + device,Critical,Not Started,,"",Compliant device required,Day 0: Step 5
+Identity - Day 0,Configure Conditional Access - Block risky,High,Not Started,,"",Medium+ risk,Day 0: Step 5
+Identity - Day 0,Enable Privileged Identity Management (PIM),Critical,Not Started,,"",No standing Global Admins,Day 0: Step 6
+Identity - Day 0,Configure admin consent workflow,High,Not Started,,"",Disable user consent,Day 0: Step 7
+Identity - Day 0,Configure password policies,Medium,Not Started,,"",Custom banned list,Day 0: Step 8
+Identity - Day 0,Enable Identity Protection,High,Not Started,,"",User + sign-in risk,Day 0: Step 8
+Identity - Day 0,Configure guest user controls,Medium,Not Started,,"",Limit invitations,Day 0: Step 8
+Identity - Day 0,Implement workload identity standard,High,Not Started,,"",Managed identities + OIDC,Day 0: Step 9
+Management - Day 1,Create management group hierarchy,High,Not Started,,"",Platform/corp/sandbox/products,Day 1: Step 1
+Management - Day 1,Create subscriptions per environment,High,Not Started,,"",dev/test/prod per product,Day 1: Step 2
+Management - Day 1,Adopt Azure Landing Zone blueprint,Medium,Not Started,,"",Foundation architecture,Day 1: Step 3
+Management - Day 1,Configure baseline RBAC,High,Not Started,,"",Assign to groups not users,Day 1: Step 4
+Management - Day 1,Deny Owner role except break-glass,High,Not Started,,"",Use Contributor + scopes,Day 1: Step 4
+Management - Day 1,Enable Defender for Cloud - VMs,High,Not Started,,"",Plan 2 recommended,Day 1: Step 5
+Management - Day 1,Enable Defender for Cloud - App Services,High,Not Started,,"",Standard tier,Day 1: Step 5
+Management - Day 1,Enable Defender for Cloud - SQL,High,Not Started,,"",Standard tier,Day 1: Step 5
+Management - Day 1,Enable Defender for Cloud - Storage,High,Not Started,,"",With malware scanning,Day 1: Step 5
+Management - Day 1,Enable Defender for Cloud - Kubernetes,High,Not Started,,"",Standard tier,Day 1: Step 5
+Management - Day 1,Enable Defender for Cloud - Container Registry,High,Not Started,,"",Standard tier,Day 1: Step 5
+Management - Day 1,Enable Defender for Cloud - Key Vault,High,Not Started,,"",Standard tier,Day 1: Step 5
+Network - Day 2,Create hub resource group,High,Not Started,,"",rg-org-platform-env-region-net,Day 2: Step 1
+Network - Day 2,Deploy hub VNet,High,Not Started,,"",10.0.0.0/16 default,Day 2: Step 1
+Network - Day 2,Deploy Azure Firewall Premium,High,Not Started,,"",TLS inspection + IDPS,Day 2: Step 1
+Network - Day 2,Enable DDoS Protection Standard (prod only),High,Not Started,,"",~$3k/month,Day 2: Step 1
+Network - Day 2,Deploy Azure Bastion,High,Not Started,,"",Standard tier,Day 2: Step 1
+Network - Day 2,Create private DNS zones,High,Not Started,,"",For Private Link services,Day 2: Step 1
+Network - Day 2,Deploy spoke VNets per environment,High,Not Started,,"",10.x.0.0/16 per spoke,Day 2: Step 2
+Network - Day 2,Configure NSGs per subnet,High,Not Started,,"",Deny Internet by default,Day 2: Step 2
+Network - Day 2,Configure VNet peering (hub-spoke),High,Not Started,,"",Allow forwarded traffic,Day 2: Step 2
+Network - Day 2,Deploy Application Gateway with WAF,High,Not Started,,"",WAF_v2 SKU,Day 2: Step 3
+Network - Day 2,Block direct origin access,High,Not Started,,"",NSG rules,Day 2: Step 3
+Network - Day 2,Configure route table (force firewall),High,Not Started,,"",0.0.0.0/0 via firewall,Day 2: Step 4
+Network - Day 2,Configure firewall application rules,High,Not Started,,"",Allow-list package repos,Day 2: Step 4
+Network - Day 2,Configure Private Link DNS,High,Not Started,,"",Link DNS zones to spokes,Day 2: Step 5
+Network - Day 2,Disable RDP/SSH from internet,Critical,Not Started,,"",Use Bastion + JIT,Day 2: Step 6
+Network - Day 2,Enable JIT access via Defender,High,Not Started,,"",Max 3 hours,Day 2: Step 6
+Policy - Day 3,Assign policy - Deny public Storage,Critical,Not Started,,"",At products MG,Day 3: Step 1
+Policy - Day 3,Assign policy - Enforce HTTPS Storage,High,Not Started,,"",At products MG,Day 3: Step 2
+Policy - Day 3,Assign policy - Enforce TLS 1.2+,High,Not Started,,"",At products MG,Day 3: Step 2
+Policy - Day 3,Assign policy - Require disk encryption,High,Not Started,,"",Start with Audit,Day 3: Step 2
+Policy - Day 3,Assign policy - Require Private Endpoints,High,Not Started,,"",Initiative,Day 3: Step 3
+Policy - Day 3,Assign policy - Auto diagnostic settings,High,Not Started,,"",To Log Analytics,Day 3: Step 4
+Policy - Day 3,Assign policy - Require Org tag,Medium,Not Started,,"",On resource groups,Day 3: Step 5
+Policy - Day 3,Assign policy - Require Environment tag,Medium,Not Started,,"",On resource groups,Day 3: Step 5
+Policy - Day 3,Assign policy - Require Owner tag,Medium,Not Started,,"",On resource groups,Day 3: Step 5
+Policy - Day 3,Assign policy - Inherit tags from RG,Medium,Not Started,,"",Org/Env/Owner,Day 3: Step 5
+Policy - Day 3,Assign policy - Allowed regions,Medium,Not Started,,"",Cost control,Day 3: Step 6
+Policy - Day 3,Assign policy - Allowed VM SKUs,Medium,Not Started,,"",Cost control,Day 3: Step 6
+Policy - Day 3,Test policies in Audit mode first,High,Not Started,,"",7 days audit then Deny,Day 3: Step 7
+Policy - Day 3,Document policy exemptions,Medium,Not Started,,"",Time-bound exceptions,Day 3: Step 8
+Policy - Day 3,Target >95% policy compliance,High,Not Started,,"",Monthly review,Day 3: Exit Criteria
+Logging - Day 4,Create Log Analytics workspace,High,Not Started,,"",Per region,Day 4: Step 1
+Logging - Day 4,Configure workspace retention (90 days),Medium,Not Started,,"",Or per compliance req,Day 4: Step 1
+Logging - Day 4,Configure table-level retention,Medium,Not Started,,"",Archive after 90 days,Day 4: Step 1
+Logging - Day 4,Enable diagnostic settings - Key Vault,High,Not Started,,"",To Log Analytics,Day 4: Step 2
+Logging - Day 4,Enable diagnostic settings - Storage,High,Not Started,,"",Read/Write/Delete logs,Day 4: Step 2
+Logging - Day 4,Enable diagnostic settings - SQL,High,Not Started,,"",Audit logs,Day 4: Step 2
+Logging - Day 4,Enable diagnostic settings - Firewall,High,Not Started,,"",All logs,Day 4: Step 2
+Logging - Day 4,Enable diagnostic settings - NSGs,High,Not Started,,"",Flow logs,Day 4: Step 2
+Logging - Day 4,Enable Azure Sentinel,High,Not Started,,"",On Log Analytics workspace,Day 4: Step 3
+Logging - Day 4,Connect Sentinel - Entra ID,High,Not Started,,"",Sign-in + Audit logs,Day 4: Step 3
+Logging - Day 4,Connect Sentinel - Azure Activity,High,Not Started,,"",Subscription activity,Day 4: Step 3
+Logging - Day 4,Connect Sentinel - Key Vault,High,Not Started,,"",Vault operations,Day 4: Step 3
+Logging - Day 4,Connect Sentinel - Storage,High,Not Started,,"",Blob operations,Day 4: Step 3
+Logging - Day 4,Connect Sentinel - Firewall,High,Not Started,,"",Threat intel,Day 4: Step 3
+Logging - Day 4,Enable analytics rule - Impossible travel,High,Not Started,,"",High-signal alert,Day 4: Step 4
+Logging - Day 4,Enable analytics rule - Mass password reset,High,Not Started,,"",Suspicious activity,Day 4: Step 4
+Logging - Day 4,Enable analytics rule - Suspicious consent,High,Not Started,,"",OAuth attacks,Day 4: Step 4
+Logging - Day 4,Enable analytics rule - Mass KV access,High,Not Started,,"",Data exfiltration,Day 4: Step 4
+Logging - Day 4,Enable analytics rule - Crypto-mining,High,Not Started,,"",Resource abuse,Day 4: Step 4
+Logging - Day 4,Configure action groups,High,Not Started,,"",Email/SMS/Teams,Day 4: Step 5
+Logging - Day 4,Test alert routing,High,Not Started,,"",Send test alert,Day 4: Step 5
+Data - Day 5,Create Key Vaults per environment,High,Not Started,,"",One per env per region,Day 5: Step 1
+Data - Day 5,Enable Key Vault RBAC authorization,High,Not Started,,"",No access policies,Day 5: Step 1
+Data - Day 5,Enable Key Vault purge protection,Critical,Not Started,,"",Cannot be disabled,Day 5: Step 1
+Data - Day 5,Enable Key Vault soft delete,Critical,Not Started,,"",90 days retention,Day 5: Step 1
+Data - Day 5,Disable Key Vault public access,Critical,Not Started,,"",Private endpoint only,Day 5: Step 1
+Data - Day 5,Create Managed HSM (if regulated),Medium,Not Started,,"",For payment/healthcare,Day 5: Step 1
+Data - Day 5,Harden Storage accounts,Critical,Not Started,,"",HTTPS + TLS 1.2 + no keys,Day 5: Step 2
+Data - Day 5,Disable Storage public access,Critical,Not Started,,"",Private endpoint only,Day 5: Step 2
+Data - Day 5,Disable Storage shared key access,High,Not Started,,"",Entra ID only,Day 5: Step 2
+Data - Day 5,Enable Storage versioning,High,Not Started,,"",Ransomware protection,Day 5: Step 2
+Data - Day 5,Enable Storage soft delete,High,Not Started,,"",90 days retention,Day 5: Step 2
+Data - Day 5,Enable Storage immutability (logs),High,Not Started,,"",365 days locked,Day 5: Step 2
+Data - Day 5,Create SQL Server with Entra-only auth,High,Not Started,,"",Disable SQL auth,Day 5: Step 3
+Data - Day 5,Disable SQL public access,Critical,Not Started,,"",Private endpoint only,Day 5: Step 3
+Data - Day 5,Enable SQL TDE with CMK,High,Not Started,,"",Customer-managed key,Day 5: Step 3
+Data - Day 5,Enable SQL auditing to Log Analytics,High,Not Started,,"",Immutable storage,Day 5: Step 3
+Data - Day 5,Create Cosmos DB private-only,High,Not Started,,"",No public access,Day 5: Step 3
+Data - Day 5,Enable Cosmos CMK encryption,Medium,Not Started,,"",If sensitive data,Day 5: Step 3
+Workloads - Day 6,Create App Service with VNet integration,High,Not Started,,"",Outbound via VNet,Day 6: App Service
+Workloads - Day 6,Enforce App Service HTTPS-only,High,Not Started,,"",Min TLS 1.2,Day 6: App Service
+Workloads - Day 6,Disable App Service FTP,High,Not Started,,"",FTPS disabled,Day 6: App Service
+Workloads - Day 6,Lock down App Service SCM site,High,Not Started,,"",Private access only,Day 6: App Service
+Workloads - Day 6,Use Key Vault references (no secrets),Critical,Not Started,,"",All app settings,Day 6: App Service
+Workloads - Day 6,Enable App Service managed identity,High,Not Started,,"",System-assigned,Day 6: App Service
+Workloads - Day 6,Create private AKS cluster,High,Not Started,,"",No public API,Day 6: AKS
+Workloads - Day 6,Enable AKS Azure CNI,High,Not Started,,"",Advanced networking,Day 6: AKS
+Workloads - Day 6,Enable AKS Defender,High,Not Started,,"",Container scanning,Day 6: AKS
+Workloads - Day 6,Enable AKS Azure Policy,High,Not Started,,"",Admission controller,Day 6: AKS
+Workloads - Day 6,Configure AKS pod security,High,Not Started,,"",No privileged containers,Day 6: AKS
+Workloads - Day 6,Disable AKS local accounts,High,Not Started,,"",Entra ID only,Day 6: AKS
+Workloads - Day 6,Create VMs without public IPs,High,Not Started,,"",Bastion access only,Day 6: VMs
+Workloads - Day 6,Disable VM password authentication,Critical,Not Started,,"",SSH keys only,Day 6: VMs
+Workloads - Day 6,Enable VM disk encryption,High,Not Started,,"",CMK if needed,Day 6: VMs
+Workloads - Day 6,Enable VM JIT access,High,Not Started,,"",Via Defender,Day 6: VMs
+DevSecOps - Day 7,Implement branch protection,High,Not Started,,"",Require reviews,Day 7: Source Control
+DevSecOps - Day 7,Create CODEOWNERS file,Medium,Not Started,,"",Define reviewers,Day 7: Source Control
+DevSecOps - Day 7,Require signed commits,Medium,Not Started,,"",GPG signatures,Day 7: Source Control
+DevSecOps - Day 7,Configure OIDC federation (GitHub),Critical,Not Started,,"",No static secrets,Day 7: CI/CD
+DevSecOps - Day 7,Configure OIDC federation (Azure DevOps),Critical,Not Started,,"",No static secrets,Day 7: CI/CD
+DevSecOps - Day 7,Implement SAST scanning,High,Not Started,,"",Semgrep/CodeQL,Day 7: Security Scanning
+DevSecOps - Day 7,Implement dependency scanning,High,Not Started,,"",npm audit/Snyk,Day 7: Security Scanning
+DevSecOps - Day 7,Implement IaC scanning,High,Not Started,,"",Checkov/tfsec,Day 7: Security Scanning
+DevSecOps - Day 7,Implement container scanning,High,Not Started,,"",Trivy/Aqua,Day 7: Security Scanning
+DevSecOps - Day 7,Create ACR with private access,High,Not Started,,"",No public pulls,Day 7: Container Registry
+DevSecOps - Day 7,Enable ACR content trust,High,Not Started,,"",Signed images,Day 7: Container Registry
+DevSecOps - Day 7,Configure ACR retention policy,Medium,Not Started,,"",90 days untagged,Day 7: Container Registry
+Testing - Day 8,Implement infrastructure validation,Medium,Not Started,,"",Policy compliance checks,Day 8: Automated Testing
+Testing - Day 8,Verify no public IPs in production,High,Not Started,,"",Automated query,Day 8: Automated Testing
+Testing - Day 8,Verify Key Vault private access,High,Not Started,,"",Automated query,Day 8: Automated Testing
+Testing - Day 8,Conduct penetration testing,Medium,Not Started,,"",Azure-approved only,Day 8: Penetration Testing
+Testing - Day 8,Test WAF effectiveness,Medium,Not Started,,"",OWASP Top 10,Day 8: Penetration Testing
+Testing - Day 8,Conduct chaos engineering tests,Low,Not Started,,"",Zone failure simulation,Day 8: Chaos Engineering
+Compliance - Day 9,Map controls to SOC 2,Medium,Not Started,,"",CC6.1/6.6/6.7/7.2/7.3,Day 9: SOC 2
+Compliance - Day 9,Configure SOC 2 evidence collection,Medium,Not Started,,"",Audit log exports,Day 9: SOC 2
+Compliance - Day 9,Map controls to ISO 27001,Medium,Not Started,,"",A.9/10/12/14/17,Day 9: ISO 27001
+Compliance - Day 9,Map controls to HIPAA,High,Not Started,,"",164.312 safeguards,Day 9: HIPAA
+Compliance - Day 9,Configure HIPAA encryption,High,Not Started,,"",At-rest + in-transit,Day 9: HIPAA
+Compliance - Day 9,Map controls to PCI-DSS,High,Not Started,,"",Req 1/2/3/4/8/10,Day 9: PCI-DSS
+Compliance - Day 9,Configure PCI logging retention,High,Not Started,,"",1 year minimum,Day 9: PCI-DSS
+Ongoing,Create Recovery Services Vault,High,Not Started,,"",GRS with immutability,Ongoing: Backup
+Ongoing,Enable VM backups,High,Not Started,,"",Daily backups,Ongoing: Backup
+Ongoing,Enable SQL geo-replication,High,Not Started,,"",Failover group,Ongoing: Backup
+Ongoing,Configure Storage versioning,High,Not Started,,"",Ransomware protection,Ongoing: Backup
+Ongoing,Test backup restore (monthly),Critical,Not Started,,"",Document RPO/RTO,Ongoing: Backup
+Ongoing,Test SQL failover (quarterly),High,Not Started,,"",Validate RTO,Ongoing: DR
+Ongoing,Test break-glass access (monthly),Critical,Not Started,,"",Verify works,Ongoing: Audits
+Ongoing,Review Owner/UAA assignments (monthly),High,Not Started,,"",Remove unnecessary,Ongoing: Audits
+Ongoing,Review policy compliance (monthly),High,Not Started,,"",Target >95%,Ongoing: Audits
+Ongoing,Check for expired exemptions (monthly),Medium,Not Started,,"",Remove or extend,Ongoing: Audits
+Ongoing,Rotate service principal credentials (monthly),High,Not Started,,"",Automated rotation,Ongoing: Audits
+Ongoing,Conduct CA policy review (quarterly),Medium,Not Started,,"",Update as needed,Ongoing: Audits
+Ongoing,Conduct PIM audit (quarterly),High,Not Started,,"",Role assignments,Ongoing: Audits
+Ongoing,Update threat model (quarterly),Medium,Not Started,,"",New risks,Ongoing: Audits
