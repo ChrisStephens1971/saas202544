@@ -64,3 +64,27 @@ variable "application" {
   type        = string
   default     = "saas202544"
 }
+
+variable "proj" {
+  description = "Project identifier (saasYYYYMM format)"
+  type        = string
+  default     = "saas202544"
+}
+
+variable "seq" {
+  description = "Resource sequence number"
+  type        = string
+  default     = "01"
+}
+
+variable "tags" {
+  description = "Resource tags"
+  type        = map(string)
+  default = {
+    org    = "verdaio"
+    proj   = "saas202544"
+    env    = "dev"
+    region = "eastus2"
+    owner  = "chris.stephens@verdaio.com"
+  }
+}

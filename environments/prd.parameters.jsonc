@@ -1,0 +1,31 @@
+{
+  // Bicep parameters for prd environment
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/azure-resource-manager-parameter-file-2023-09-01.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "org": {
+      "value": "verdaio"
+    },
+    "proj": {
+      "value": "saas202544"
+    },
+    "env": {
+      "value": "prd"
+    },
+    "region": {
+      "value": "eastus2"
+    },
+    "seq": {
+      "value": "01"
+    },
+    "tags": {
+      "value": {
+        "org": "verdaio",
+        "proj": "saas202544",
+        "env": "prd",
+        "region": "eastus2",
+        "owner": "chris.stephens@verdaio.com"
+      }
+    }
+  }
+}
