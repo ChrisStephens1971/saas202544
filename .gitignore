@@ -198,3 +198,4 @@ build/
 # PROJECT SPECIFIC
 # =============================================================================
 # Add project-specific ignores below
+joblog-*.txt
