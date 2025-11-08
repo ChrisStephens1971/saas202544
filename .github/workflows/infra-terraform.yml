@@ -1,0 +1,10 @@
+﻿name: infra-terraform
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo noop plan
