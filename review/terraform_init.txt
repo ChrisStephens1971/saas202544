@@ -1,0 +1,10 @@
+[0m[1mInitializing the backend...[0m
+[0m[1mInitializing modules...[0m
+- naming in modules\naming
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mFailed to get existing workspaces: listing blobs: executing request: unexpected status 403 (403 This request is not authorized to perform this operation using this permission.) with AuthorizationPermissionMismatch: This request is not authorized to perform this operation using this permission.
+[31m│[0m [0mRequestId:7de8c216-f01e-000b-4eb2-509edc000000
+[31m│[0m [0mTime:2025-11-08T13:21:57.5003662Z[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m
+[31m╵[0m[0m
