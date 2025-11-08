@@ -1,0 +1,154 @@
+name: Dev Cost Dashboard (Graph)
+
+on:
+  schedule:
+    - cron: "0 12 * * 1"  # Mondays 12:00 UTC
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  cost-report:
+    name: Cost Report with Email
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate required variables
+        run: |
+          missing=""
+          if [ -z "${{ vars.AZURE_TENANT_ID }}" ]; then missing="$missing AZURE_TENANT_ID"; fi
+          if [ -z "${{ vars.AZURE_SUBSCRIPTION_ID }}" ]; then missing="$missing AZURE_SUBSCRIPTION_ID"; fi
+          if [ -z "${{ vars.AZURE_CLIENT_ID }}" ]; then missing="$missing AZURE_CLIENT_ID"; fi
+          if [ -z "${{ vars.COST_EMAIL_FROM }}" ]; then missing="$missing COST_EMAIL_FROM"; fi
+          if [ -z "${{ vars.COST_EMAIL_TO }}" ]; then missing="$missing COST_EMAIL_TO"; fi
+          if [ -n "$missing" ]; then
+            echo "::error::Missing required variables:$missing"
+            exit 1
+          fi
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq
+
+      - name: Query MonthToDate costs
+        id: cost
+        run: |
+          mkdir -p cost
+
+          if [ -n "${{ vars.COST_RG }}" ]; then
+            scope="/subscriptions/${{ vars.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ vars.COST_RG }}"
+          else
+            scope="/subscriptions/${{ vars.AZURE_SUBSCRIPTION_ID }}"
+          fi
+
+          echo "Querying costs for scope: $scope"
+
+          res=$(az costmanagement query --type ActualCost --timeframe MonthToDate --scope "$scope" \
+            --dataset '{"granularity":"None","aggregation":{"totalCost":{"name":"Cost","function":"Sum"}},"grouping":[{"type":"Dimension","name":"ServiceName"},{"type":"Dimension","name":"ResourceGroupName"}]}')
+
+          echo "$res" > cost/dev-cost.json
+
+          total=$(jq -r '[.properties.rows[][2]]|add' cost/dev-cost.json)
+          echo "total=$total" >> $GITHUB_OUTPUT
+
+      - name: Post summary table
+        run: |
+          echo "## Dev Cost Dashboard (Month-to-Date)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Total:** \$${{ steps.cost.outputs.total }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Service | Resource Group | Cost |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|---:|" >> $GITHUB_STEP_SUMMARY
+          jq -r '.properties.rows | sort_by(.[2]) | reverse | .[:10][] | "| \(.[0]) | \(.[1]) | $\(.[2]) |"' cost/dev-cost.json >> $GITHUB_STEP_SUMMARY
+
+      - name: Build HTML email body
+        run: |
+          cat > cost/email-body.html <<'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <style>
+              body { font-family: Arial, sans-serif; }
+              table { border-collapse: collapse; width: 100%; max-width: 800px; }
+              th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+              th { background-color: #0078d4; color: white; }
+              tr:nth-child(even) { background-color: #f2f2f2; }
+              .cost { text-align: right; }
+            </style>
+          </head>
+          <body>
+            <h2>Dev Cost Dashboard (Month-to-Date)</h2>
+            <p><strong>Total:</strong> $TOTAL_COST</p>
+            <table>
+              <thead>
+                <tr><th>Service</th><th>Resource Group</th><th class="cost">Cost</th></tr>
+              </thead>
+              <tbody>
+          TABLE_ROWS
+              </tbody>
+            </table>
+            <p><em>Generated: TIMESTAMP</em></p>
+          </body>
+          </html>
+          EOF
+
+          rows=$(jq -r '.properties.rows[] | "<tr><td>\(.[0])</td><td>\(.[1])</td><td class=\"cost\">$\(.[2])</td></tr>"' cost/dev-cost.json)
+          timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+
+          sed -i "s|TOTAL_COST|${{ steps.cost.outputs.total }}|g" cost/email-body.html
+          sed -i "s|TABLE_ROWS|$rows|g" cost/email-body.html
+          sed -i "s|TIMESTAMP|$timestamp|g" cost/email-body.html
+
+      - name: Send email via Microsoft Graph
+        run: |
+          graph_token=$(az account get-access-token --resource-type ms-graph --query accessToken -o tsv)
+          html_body=$(cat cost/email-body.html | jq -Rs .)
+
+          cat > /tmp/graph-request.json <<EOF
+          {
+            "message": {
+              "subject": "Dev Cost Dashboard (MTD): \$${{ steps.cost.outputs.total }}",
+              "body": {
+                "contentType": "HTML",
+                "content": $html_body
+              },
+              "toRecipients": [
+                { "emailAddress": { "address": "${{ vars.COST_EMAIL_TO }}" } }
+              ]
+            },
+            "saveToSentItems": false
+          }
+          EOF
+
+          response=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://graph.microsoft.com/v1.0/users/${{ vars.COST_EMAIL_FROM }}/sendMail" \
+            -H "Authorization: Bearer $graph_token" \
+            -H "Content-Type: application/json" \
+            -d @/tmp/graph-request.json)
+
+          http_code=$(echo "$response" | tail -n1)
+          if [ "$http_code" -ne 202 ]; then
+            echo "::error::Graph API failed with HTTP $http_code"
+            echo "$response" | sed '$d'
+            exit 1
+          fi
+
+          echo "✓ Email sent successfully"
+
+      - name: Upload cost data
+        uses: actions/upload-artifact@v4
+        with:
+          name: cost-report
+          path: cost/
