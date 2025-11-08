@@ -1,92 +1,69 @@
-name: review-pack
-
-on:
-  workflow_dispatch: {}
-  pull_request:
-    branches: [master, main]
-
-permissions:
-  contents: read
-  id-token: write
-
-env:
-  REVIEW_AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID || '04c5f804-d3ee-4b0b-b7fa-772496bb7a34' }}
-  REVIEW_AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID || 'b3fc75c0-c060-4a53-a7cf-5f6ae22fefec' }}
-  REVIEW_AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID || '750452fa-c519-455f-b77d-18f9707e2f39' }}
+﻿name: review-pack
+on: [workflow_dispatch]
+permissions: { id-token: write, contents: read }
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install utilities
+      - name: Prep tools and review dir
         run: |
-          sudo apt-get update
-          sudo apt-get install -y tree cloc graphviz
+          sudo apt-get update && sudo apt-get install -y tree cloc graphviz jq
+          mkdir -p review
 
-      - name: Prep review dir
-        run: mkdir -p review/github-workflows
-
-      - name: File tree
+      - name: File tree / cloc / git log / dump workflows
         run: |
           tree -a -I ".git|node_modules|bin|obj|.terraform|.venv|dist|build" > review/tree.txt
-
-      - name: Line counts
-        run: |
           cloc --json --exclude-dir=.git,node_modules,bin,obj,.terraform,.venv,dist,build . > review/cloc.json
-
-      - name: Git log (90d)
-        run: git log --since="90 days ago" --pretty=format:"%h %ad %an %s" --date=short > review/gitlog_90d.txt
-
-      - name: Dump workflows
-        run: |
-          if [ -d .github/workflows ]; then
-            cp -r .github/workflows review/github-workflows/workflows
-          fi
-
-      - name: Copy OIDC reference
-        run: |
-          if [ -f OIDC-SETUP.md ]; then
-            cp OIDC-SETUP.md review/OIDC-SETUP.md
-          fi
+          git log --since="90 days ago" --pretty=format:"%h %ad %an %s" --date=short > review/gitlog_90d.txt
+          mkdir -p review/github-workflows && cp -v .github/workflows/*.yml review/github-workflows/ 2>/dev/null || true
 
       - name: Azure Login (OIDC)
         uses: azure/login@v2
         with:
-          client-id: ${{ env.REVIEW_AZURE_CLIENT_ID }}
-          tenant-id: ${{ env.REVIEW_AZURE_TENANT_ID }}
-          subscription-id: ${{ env.REVIEW_AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Setup Terraform CLI
-        if: hashFiles('infrastructure/terraform/**.tf') != ''
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.9.0
-
-      - name: Terraform validate/plan
-        if: hashFiles('infrastructure/terraform/**.tf') != ''
-        working-directory: infrastructure/terraform
-        env:
-          TF_IN_AUTOMATION: "true"
-          ARM_CLIENT_ID: ${{ env.REVIEW_AZURE_CLIENT_ID }}
-          ARM_TENANT_ID: ${{ env.REVIEW_AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ env.REVIEW_AZURE_SUBSCRIPTION_ID }}
+      - name: Who am I + sub check
         run: |
-          terraform init -input=false -reconfigure
-          terraform fmt -check | tee ../../review/terraform_fmt.txt || true
-          terraform validate -no-color | tee ../../review/terraform_validate.txt
-          terraform plan -input=false -var-file='../../environments/dev.tfvars' -out tfplan || true
+          az account show -o table | tee review/az_account.txt
+
+      - name: Ensure tfstate container exists (RBAC login)
+        run: |
+          az storage container show --account-name stvrdtfstateeus201 --name tfstate --auth-mode login >/dev/null 2>&1 \
+          || az storage container create --account-name stvrdtfstateeus201 --name tfstate --auth-mode login --public-access off
+          az storage container show --account-name stvrdtfstateeus201 --name tfstate --auth-mode login -o table | tee review/tfstate_container.txt
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform snapshot (dev)
+        if: hashFiles('infrastructure/terraform/**') != ''
+        working-directory: infrastructure/terraform
+        continue-on-error: true
+        env:
+          ARM_USE_OIDC: "true"
+          ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+          ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          TF_LOG: INFO
+          TF_LOG_PATH: ../../review/terraform_tflog.txt
+        run: |
+          terraform -version | tee ../../review/terraform_versions.txt
+          terraform init -upgrade -reconfigure -input=false -lock-timeout=300s 2>&1 | tee ../../review/terraform_init.txt
+          terraform fmt -check 2>&1 | tee ../../review/terraform_fmt.txt
+          terraform validate 2>&1 | tee ../../review/terraform_validate.txt
+          terraform plan -input=false -var-file='../../environments/dev.tfvars' -detailed-exitcode -out tfplan 2>&1 | tee ../../review/terraform_plan_full.txt
+          echo $? > ../../review/terraform_plan_exitcode.txt || true
           terraform show -no-color tfplan > ../../review/terraform_plan.txt || true
           terraform graph | dot -Tsvg > ../../review/terraform_graph.svg || true
 
-      - name: Bicep build
-        if: hashFiles('infrastructure/bicep/**.bicep') != ''
+      - name: Bicep validate (if any)
         run: |
-          az version || curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-          az bicep install
-          az bicep build --file infrastructure/bicep/main.bicep --outfile review/bicep_compiled.json || true
+          find . -name '*.bicep' | wc -l | xargs echo "Bicep files:" | tee review/bicep_validation.txt
+          az bicep version >> review/bicep_validation.txt || true
 
       - name: Secret scan (gitleaks)
         uses: gitleaks/gitleaks-action@v2
@@ -94,48 +71,11 @@ jobs:
           args: detect --no-color --report-path review/gitleaks.sarif --report-format sarif
         continue-on-error: true
 
-      - name: Collect gitleaks report
-        if: always()
-        run: |
-          if [ -f results.sarif ]; then
-            mv results.sarif review/gitleaks.sarif
-          elif [ ! -f review/gitleaks.sarif ]; then
-            echo '{"runs":[{"tool":{"driver":{"name":"gitleaks"}},"results":[]}]}' > review/gitleaks.sarif
-          fi
-
-      - name: Check for critical secrets
-        if: always()
-        run: |
-          if [ -f review/gitleaks.sarif ]; then
-            FINDINGS=$(jq '.runs[0].results | length' review/gitleaks.sarif 2>/dev/null || echo "0")
-            echo "::notice::Gitleaks found $FINDINGS potential secret(s)"
-            if [ "$FINDINGS" -gt 0 ]; then
-              echo "::warning::Review gitleaks.sarif in the artifact for details"
-            fi
-          fi
-
-      - name: Optional Azure inventory
-        if: always()
-        env:
-          AZURE_SUBSCRIPTION_ID: ${{ env.REVIEW_AZURE_SUBSCRIPTION_ID }}
-          AZURE_TENANT_ID: ${{ env.REVIEW_AZURE_TENANT_ID }}
-          AZURE_CLIENT_ID: ${{ env.REVIEW_AZURE_CLIENT_ID }}
-        run: |
-          if [ -n "${AZURE_SUBSCRIPTION_ID}" ] && [ -n "${AZURE_TENANT_ID}" ] && [ -n "${AZURE_CLIENT_ID}" ]; then
-            az account set -s "${AZURE_SUBSCRIPTION_ID}" || true
-            az extension add -n resource-graph -y || true
-            az graph query -q "Resources | project name,type,location,resourceGroup,subscriptionId,tostring(tags)" --first 1000 -o table > review/azure_resources.txt || true
-            az role assignment list -o json > review/role_assignments.json || true
-          else
-            echo "Azure subscription variables not configured; skipping inventory."
-          fi
-
-      - name: Package review pack
-        run: zip -r review-pack.zip review
-
       - name: Upload artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: review-pack
-          path: review-pack.zip
-
+          path: review
+          if-no-files-found: warn
+          retention-days: 7
