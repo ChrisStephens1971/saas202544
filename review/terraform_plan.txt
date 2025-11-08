@@ -1,0 +1,10 @@
+TERRAFORM PLAN - NOT EXECUTED
+
+Status: BLOCKED
+Reason: Terraform init failed due to missing RBAC permissions (see terraform_validate.txt)
+
+Cannot generate plan until:
+1. RBAC roles are assigned to service principal 750452fa-c519-455f-b77d-18f9707e2f39
+2. Terraform init succeeds with Azure AD authentication
+
+See OIDC-SETUP.md for required role assignment commands.

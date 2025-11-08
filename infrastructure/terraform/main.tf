@@ -35,17 +35,17 @@ provider "azurerm" {
 module "naming" {
   source = "./modules/naming"
 
-  org               = var.org
-  project           = var.project
-  env               = var.env
-  region            = var.region
-  location          = var.location
-  owner             = var.owner
-  cost_center       = var.cost_center
-  data_sensitivity  = var.data_sensitivity
-  compliance        = var.compliance
-  business_unit     = var.business_unit
-  application       = var.application
+  org              = var.org
+  project          = var.project
+  env              = var.env
+  region           = var.region
+  location         = var.location
+  owner            = var.owner
+  cost_center      = var.cost_center
+  data_sensitivity = var.data_sensitivity
+  compliance       = var.compliance
+  business_unit    = var.business_unit
+  application      = var.application
 }
 
 # Resource Groups

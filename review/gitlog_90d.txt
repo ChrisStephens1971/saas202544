@@ -1,0 +1,2 @@
+942bdfe - ChrisStephens1971, 16 minutes ago : feat: add Azure bootstrap configuration with OIDC
+068c161 - ChrisStephens1971, 20 minutes ago : Initial commit from template
