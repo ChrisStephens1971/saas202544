@@ -24,6 +24,7 @@ This repository implements a cloud-native SaaS infrastructure using Azure and Te
 **Tenant ID**: `04c5f804-d3ee-4b0b-b7fa-772496bb7a34`
 
 **Storage Account Details**:
+
 - Kind: StorageV2
 - Access Tier: Hot
 - TLS Version: 1.2 (minimum)
