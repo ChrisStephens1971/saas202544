@@ -56,31 +56,31 @@ jobs:
           echo "Querying costs for scope: ${scope}"
 
           # Use REST API directly (extension 'query' command not available)
-          cat > /tmp/cost-query.json <<'EOF'
-{
-  "type": "ActualCost",
-  "timeframe": "MonthToDate",
-  "dataset": {
-    "granularity": "None",
-    "aggregation": {
-      "totalCost": {
-        "name": "Cost",
-        "function": "Sum"
-      }
-    },
-    "grouping": [
-      {
-        "type": "Dimension",
-        "name": "ServiceName"
-      },
-      {
-        "type": "Dimension",
-        "name": "ResourceGroupName"
-      }
-    ]
+          cat > /tmp/cost-query.json <<'COSTQUERY'
+          {
+            "type": "ActualCost",
+            "timeframe": "MonthToDate",
+            "dataset": {
+              "granularity": "None",
+              "aggregation": {
+                "totalCost": {
+                  "name": "Cost",
+                  "function": "Sum"
+                }
+              },
+              "grouping": [
+                {
+                  "type": "Dimension",
+                  "name": "ServiceName"
+                },
+                {
+                  "type": "Dimension",
+                  "name": "ResourceGroupName"
+                }
+              ]
+            }
           }
-}
-EOF
+          COSTQUERY
 
           res=$(az rest --method POST \
             --url "https://management.azure.com${scope}/providers/Microsoft.CostManagement/query?api-version=2023-11-01" \
