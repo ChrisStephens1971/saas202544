@@ -1,0 +1,42 @@
+---
+name: oidc-smoke
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/oidc-smoke.yml"
+permissions:
+  id-token: write
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  smoke:
+    name: oidc-smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Azure OIDC login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id:  ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - name: Select subscription
+        run: az account set --subscription "${{ vars.AZURE_SUBSCRIPTION_ID }}"
+      - name: Who am I
+        run: az account show --output table
+      - name: Check tfstate RG + storage (control plane)
+        run: |
+          az group show -n rg-tfstate-verdaio-eastus2-01 -o table
+          az storage account show -g rg-tfstate-verdaio-eastus2-01 -n stvrdtfstateeus201 -o table
+      - name: List containers via RBAC (data plane; non-fatal if forbidden)
+        env:
+          AZURE_STORAGE_ACCOUNT: stvrdtfstateeus201
+        run: |
+          set -e
+          az storage container list --account-name "$AZURE_STORAGE_ACCOUNT" --auth-mode login -o table || {
+            echo "Note: container listing requires appropriate data-plane RBAC; proceeding without failure."
+          }
+---
