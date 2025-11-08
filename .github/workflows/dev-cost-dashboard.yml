@@ -65,13 +65,15 @@ jobs:
 
       - name: Post summary table
         run: |
-          echo "## Dev Cost Dashboard (Month-to-Date)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Total:** \$${{ steps.cost.outputs.total }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Service | Resource Group | Cost |" >> $GITHUB_STEP_SUMMARY
-          echo "|---|---|---:|" >> $GITHUB_STEP_SUMMARY
-          jq -r '.properties.rows | sort_by(.[2]) | reverse | .[:10][] | "| \(.[0]) | \(.[1]) | $\(.[2]) |"' cost/dev-cost.json >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## Dev Cost Dashboard (Month-to-Date)"
+            echo ""
+            echo "**Total:** \$${{ steps.cost.outputs.total }}"
+            echo ""
+            echo "| Service | Resource Group | Cost |"
+            echo "|---|---|---:|"
+            jq -r '.properties.rows | sort_by(.[2]) | reverse | .[:10][] | "| \(.[0]) | \(.[1]) | $\(.[2]) |"' cost/dev-cost.json
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build HTML email body
         run: |
