@@ -41,7 +41,8 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y jq
-          az extension add --name costmanagement --yes
+          az extension add --name costmanagement --yes --only-show-errors
+          az extension list --query "[?name=='costmanagement'].{Name:name,Version:version}" -o table
 
       - name: Query MonthToDate costs
         id: cost
