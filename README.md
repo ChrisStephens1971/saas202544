@@ -127,6 +127,58 @@ Validates repository structure and basic configuration before other workflows ru
 
 **Schedule**: Runs nightly at 02:00 UTC to detect credential expiry or RBAC changes.
 
+### 5. dev-cost-dashboard
+
+**File**: `.github/workflows/dev-cost-dashboard.yml`
+**Triggers**: Daily schedule, manual dispatch
+**Purpose**: Monitors Azure development environment costs and sends daily email reports
+
+**Features**:
+
+- Queries Azure Cost Management API for month-to-date costs
+- Groups costs by Service and Resource Group
+- Rounds all costs to nearest cent (2 decimal places)
+- Generates GitHub Actions step summary with cost breakdown
+- Sends HTML email report via Microsoft Graph API
+- Uploads cost data as workflow artifact
+
+**Cost Rounding**: All monetary values are formatted to 2 decimal places using `jq` rounding logic:
+```bash
+(cost * 100 | round) / 100
+```
+
+**Report Contents**:
+
+- Total month-to-date cost
+- Top 10 services by cost (sorted descending)
+- Service name, resource group, and cost columns
+- Timestamp of report generation
+
+**Schedule**: Runs daily at 12:00 UTC
+
+**Permissions Required**:
+
+- `id-token: write` - Request OIDC token for Azure authentication
+- `contents: read` - Checkout repository
+
+**Required Repository Variables**:
+
+| Variable | Purpose |
+|----------|---------|
+| `AZURE_CLIENT_ID` | Service principal application ID |
+| `AZURE_TENANT_ID` | Azure AD tenant ID |
+| `AZURE_SUBSCRIPTION_ID` | Target Azure subscription |
+| `COST_EMAIL_FROM` | Sender email address (Microsoft Graph) |
+| `COST_EMAIL_TO` | Recipient email address |
+| `COST_RG` | (Optional) Specific resource group to query |
+
+**Email Delivery**: Uses Microsoft Graph API with Azure AD authentication. The service principal must have `Mail.Send` permissions in Microsoft Graph.
+
+**Manual Trigger**:
+```bash
+gh workflow run dev-cost-dashboard.yml
+```
+
 ## Branch Protection Rules
 
 **Branch**: `main`
