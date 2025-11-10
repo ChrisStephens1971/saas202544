@@ -143,6 +143,7 @@ Validates repository structure and basic configuration before other workflows ru
 - Uploads cost data as workflow artifact
 
 **Cost Rounding**: All monetary values are formatted to 2 decimal places using `jq` rounding logic:
+
 ```bash
 (cost * 100 | round) / 100
 ```
@@ -172,9 +173,11 @@ Validates repository structure and basic configuration before other workflows ru
 | `COST_EMAIL_TO` | Recipient email address |
 | `COST_RG` | (Optional) Specific resource group to query |
 
-**Email Delivery**: Uses Microsoft Graph API with Azure AD authentication. The service principal must have `Mail.Send` permissions in Microsoft Graph.
+**Email Delivery**: Uses Microsoft Graph API with Azure AD authentication. The service principal must have
+`Mail.Send` permissions in Microsoft Graph.
 
 **Manual Trigger**:
+
 ```bash
 gh workflow run dev-cost-dashboard.yml
 ```
