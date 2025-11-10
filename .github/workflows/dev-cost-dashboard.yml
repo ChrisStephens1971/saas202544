@@ -2,7 +2,7 @@ name: Dev Cost Dashboard (Graph)
 
 on:
   schedule:
-    - cron: "0 12 * * 1"  # Mondays 12:00 UTC
+    - cron: "0 12 * * *"  # Daily 12:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -89,7 +89,7 @@ jobs:
           echo "$res" > cost/dev-cost.json
 
           # REST API returns: [Cost, ServiceName, ResourceGroupName, Currency]
-          total=$(jq -r '[.properties.rows[][0]]|add//0' cost/dev-cost.json)
+          total=$(jq -r '[.properties.rows[][0]]|add//0 | (. * 100 | round) / 100' cost/dev-cost.json)
           echo "total=${total}" >> "$GITHUB_OUTPUT"
 
       - name: Post summary table
@@ -101,7 +101,7 @@ jobs:
             echo ""
             echo "| Service | Resource Group | Cost |"
             echo "|---|---|---:|"
-            jq -r '.properties.rows | sort_by(.[0]) | reverse | .[:10][] | "| \(.[1]) | \(.[2]) | $\(.[0]) |"' cost/dev-cost.json
+            jq -r '.properties.rows | sort_by(.[0]) | reverse | .[:10][] | "| \(.[1]) | \(.[2]) | $\((.[0] * 100 | round) / 100) |"' cost/dev-cost.json
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build HTML email body
@@ -128,7 +128,7 @@ jobs:
                 <tr><th>Service</th><th>Resource Group</th><th class=\"cost\">Cost</th></tr>
               </thead>
               <tbody>
-          \(.properties.rows | sort_by(.[0]) | reverse | map("<tr><td>\(.[1])</td><td>\(.[2])</td><td class=\"cost\">$\(.[0])</td></tr>") | join("\n"))
+          \(.properties.rows | sort_by(.[0]) | reverse | map("<tr><td>\(.[1])</td><td>\(.[2])</td><td class=\"cost\">$\((.[0] * 100 | round) / 100)</td></tr>") | join("\n"))
               </tbody>
             </table>
             <p><em>Generated: \($timestamp)</em></p>
